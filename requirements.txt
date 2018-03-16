@@ -1,8 +1,2 @@
-Flask
-Jinja2
-Werkzeug
-certifi
-chardet
-distribute
 gunicorn
 requests
