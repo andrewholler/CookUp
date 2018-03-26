@@ -27,7 +27,7 @@ import app.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-    # url(r'^$', app.views.index, name='index'),
+    url(r'^$', app.views.index, name='index'),
     # url(r'^db', app.views.db, name='db'),
     path('admin/', admin.site.urls),
 ]
