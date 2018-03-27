@@ -28,7 +28,7 @@ import app.views
 
 urlpatterns = [
 url(r'^$', app.views.index, name='index'),
-url(r'^index.html$', app.views.register, name='register'),
+url(r'^index.html$', app.views.index, name='index'),
 url(r'^register.html$', app.views.register, name='register'),
 path('admin/', admin.site.urls)
 ]
