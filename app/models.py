@@ -9,26 +9,6 @@ class Ingredient(models.Model):
         db_table = 'ingredient'
 
 
-class Recipechanges(models.Model):
-    chid = models.IntegerField(primary_key=True)
-    rid = models.ForeignKey('Recipes', models.DO_NOTHING, db_column='rid', blank=True, null=True)
-    numvotes = models.IntegerField(blank=True, null=True)
-    amounts = models.CharField(max_length=30)
-    ingredients = models.CharField(max_length=50)
-
-    class Meta:
-        db_table = 'recipechanges'
-
-
-class Recipecontains(models.Model):
-    iid = models.ForeignKey(Ingredient, models.DO_NOTHING, db_column='iid', primary_key=True)
-    rid = models.ForeignKey('Recipes', models.DO_NOTHING, db_column='rid')
-
-    class Meta:
-        db_table = 'recipecontains'
-        unique_together = (('iid', 'rid'),)
-
-
 class Recipes(models.Model):
     rid = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30)
@@ -45,12 +25,24 @@ class Recipes(models.Model):
         db_table = 'recipes'
 
 
-class Userrecipe(models.Model):
-    rid = models.ForeignKey(Recipes, models.DO_NOTHING, db_column='rid', primary_key=True)
-    uid = models.ForeignKey('Users', models.DO_NOTHING, db_column='uid', blank=True, null=True)
+class Recipecontains(models.Model):
+    iid = models.ForeignKey(Ingredient, models.DO_NOTHING, db_column='iid', primary_key=True)
+    rid = models.ForeignKey('Recipes', models.DO_NOTHING, db_column='rid')
 
     class Meta:
-        db_table = 'userrecipe'
+        db_table = 'recipecontains'
+        unique_together = (('iid', 'rid'),)
+
+
+class Recipechanges(models.Model):
+    chid = models.IntegerField(primary_key=True)
+    rid = models.ForeignKey('Recipes', models.DO_NOTHING, db_column='rid', blank=True, null=True)
+    numvotes = models.IntegerField(blank=True, null=True)
+    amounts = models.CharField(max_length=30)
+    ingredients = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'recipechanges'
 
 
 class Users(models.Model):
@@ -64,3 +56,11 @@ class Users(models.Model):
 
     class Meta:
         db_table = 'users'
+
+
+class Userrecipe(models.Model):
+    rid = models.ForeignKey(Recipes, models.DO_NOTHING, db_column='rid', primary_key=True)
+    uid = models.ForeignKey('Users', models.DO_NOTHING, db_column='uid', blank=True, null=True)
+
+    class Meta:
+        db_table = 'userrecipe'
