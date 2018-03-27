@@ -26,7 +26,7 @@ class Recipes(models.Model):
 
 
 class Recipecontains(models.Model):
-    iid = models.ForeignKey(Ingredient, models.DO_NOTHING, db_column='iid', primary_key=True)
+    iid = models.ForeignKey(Ingredient, models.DO_NOTHING, primary_key=True)
     rid = models.ForeignKey('Recipes', models.DO_NOTHING, db_column='rid')
 
     class Meta:
