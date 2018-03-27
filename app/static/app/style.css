@@ -3,7 +3,7 @@ div {
 }
 
 body {
-	background-image: url("test.jpg");
+	background-image: url("background.jpg");
 	background-size:     cover;                      /* <------ */
 	background-repeat:   no-repeat;
 	background-position: center center;  
@@ -11,7 +11,7 @@ body {
 
 h1 {
 	font-family: 'Chicle', cursive;
-	font-size: 60px;
+	font-size: 100px;
 	color: black;
 }
 
