@@ -27,7 +27,7 @@ class Recipes(models.Model):
 
 class Recipecontains(models.Model):
     iid = models.ForeignKey(Ingredient, models.DO_NOTHING, primary_key=True)
-    rid = models.ForeignKey('Recipes', models.DO_NOTHING, db_column='rid')
+    rid = models.ForeignKey('Recipes', models.DO_NOTHING)
 
     class Meta:
         db_table = 'recipecontains'
@@ -36,7 +36,7 @@ class Recipecontains(models.Model):
 
 class Recipechanges(models.Model):
     chid = models.IntegerField(primary_key=True)
-    rid = models.ForeignKey('Recipes', models.DO_NOTHING, db_column='rid', blank=True, null=True)
+    rid = models.ForeignKey('Recipes', models.DO_NOTHING, blank=True, null=True)
     numvotes = models.IntegerField(blank=True, null=True)
     amounts = models.CharField(max_length=30)
     ingredients = models.CharField(max_length=50)
@@ -59,8 +59,8 @@ class Users(models.Model):
 
 
 class Userrecipe(models.Model):
-    rid = models.ForeignKey(Recipes, models.DO_NOTHING, db_column='rid', primary_key=True)
-    uid = models.ForeignKey('Users', models.DO_NOTHING, db_column='uid', blank=True, null=True)
+    rid = models.ForeignKey(Recipes, models.DO_NOTHING, primary_key=True)
+    uid = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         db_table = 'userrecipe'
