@@ -28,6 +28,7 @@ import app.views
 
 urlpatterns = [
     url(r'^$', app.views.index, name='index'),
+    url(r'^$', app.views.register, name='register'),
     # url(r'^db', app.views.db, name='db'),
     path('admin/', admin.site.urls),
 ]
