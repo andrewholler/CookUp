@@ -30,5 +30,7 @@ urlpatterns = [
 url(r'^$', app.views.index, name='index'),
 url(r'^index.html$', app.views.index, name='index'),
 url(r'^register.html$', app.views.register, name='register'),
+url(r'^dashboard.html$', app.views.dashboard, name='dashboard'),
+url(r'^profile.html$', app.views.profile, name='profile'),
 path('admin/', admin.site.urls)
 ]

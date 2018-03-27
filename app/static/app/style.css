@@ -15,7 +15,43 @@ h1 {
 	color: black;
 }
 
-.container {
-/*	opacity: 1;
-*/
+h2 {
+	font-family: 'Chicle', cursive;
+	font-size: 50px;
+	padding-left: 2cm;
+	color: black;
 }
+
+#imaginary_container{
+    margin-top:3%;
+}
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+#find-recipe {
+	font-family: 'Courgette', cursive;
+	font-size: 100px;
+	color: black;
+}
+
+#header1-like {
+	font-family: 'Chicle', cursive;
+	font-size: 50px;
+	color: black;
+}
+
+.topcorner{
+    position:absolute;
+    top:1cm;
+    right: 2cm;
+ }
