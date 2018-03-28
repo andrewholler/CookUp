@@ -55,3 +55,9 @@ h2 {
     top:1cm;
     right: 2cm;
  }
+
+.topmiddle{
+    position: absolute;
+    top:1cm;
+    left:42%;
+}
