@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from app.models import Recipes
 from django.shortcuts import render_to_response
+from django.shortcuts import redirect
 import psycopg2
 from psycopg2 import connect
 import sys
@@ -99,9 +100,9 @@ def submitedit(request):
   try:
       cooktime = int(cooktime)
   except ValueError:
-      cooktime = 'None'
-  if cooktime != 'None' and cooktime != '':
-    querystring += ",cooktime='" + str(cooktime) + "'"
+      cooktime = 0
+  querystring += ",cooktime='" + str(cooktime) + "'"
+  
   try:
       servings = int(servings)
   except ValueError:
@@ -116,7 +117,7 @@ def submitedit(request):
   con.commit()
   con.close()
   
-  return render(request, 'dashboard.html')
+  return redirect(dashboard)
 
 def deleterecipe(request):
   q = request.GET.get('q')
@@ -129,7 +130,7 @@ def deleterecipe(request):
   cur.close()
   con.commit()
   con.close()
-  return render(request, 'dashboard.html')
+  return redirect(dashboard)
 
 def addrecipe(request):
   name = request.GET.get('name')
@@ -152,7 +153,7 @@ def addrecipe(request):
   try:
       servings = int(servings)
   except ValueError:
-      servings = 0
+      servings = 1
   querystring += ",'" + str(servings) + "'"
   
   querystring += ");"
@@ -162,4 +163,4 @@ def addrecipe(request):
   con.commit()
   con.close()
   
-  return render(request, 'dashboard.html')
+  return redirect(dashboard)
