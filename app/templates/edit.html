@@ -1,0 +1,29 @@
+{% if results %}
+  {% for result in results %}
+<h2> Edit This Recipe! </h2>
+    <form method="get" action="/submitedit/">
+    <input type="hidden" value="{{ results.0.0 }}" name="rid"/>
+    Name <input type="text" value="{{ results.0.1 }}" name="name"/>
+    <br>
+    Appliances <input type=text value="{{ results.0.2 }}" name="appliances"/>
+    <br>
+    Description <input type=text value="{{ results.0.3 }}" name="description"/>
+    <br>
+    Youtube Video URL <input type=text value="{{ results.0.4 }}" name="videourl"/>
+    <br>
+    Instructions <input type=text value="{{ results.0.6 }}" name="instructions"/>
+    <br>
+    Cooktime <input type=text value="{{ results.0.8 }}" name="cooktime"/>
+    <br>
+    Servings <input type=text value="{{ results.0.9 }}" name="servings"/>
+    <br>
+    <input type="submit" value="Submit">
+    </form>
+  {% endfor %}
+{% else %}
+    <h3 class='error'>Recipe not found! Please enter a valid RID</h3>
+    <form method="get" action="/search/">
+      Search Recipe by ID:<input type="text" name="q" id="id_q" value="{{ query }}"/>
+      <input type="submit" value="Search"/>
+    </form>
+{% endif %}

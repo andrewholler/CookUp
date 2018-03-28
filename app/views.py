@@ -25,18 +25,14 @@ def submitrecipe(request):
 
 def search(request):
     query = request.GET.get('q')
-    try:
-        query = int(query)
-    except ValueError:
-        query = None
-        results = None
     print(query)
     if query:
         con = None
         con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
         cur = con.cursor()
         try:
-          cur.execute("""SELECT * from recipes WHERE rid = """ + str(query) + ";")
+          cur.execute("""SELECT * from recipes
+                         WHERE name ILIKE '%""" + str(query) + "%';")
           results = cur.fetchall()
           print(results)
           print(dir(results))
@@ -46,11 +42,69 @@ def search(request):
     context = RequestContext(request)
     return render_to_response('results.html', {"results": results,}, )
 
-'''def db(request):
+def edit(request):
+  query = request.GET.get('q')
+  print(query)
+  if query:
+      con = None
+      con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
+      cur = con.cursor()
+      try:
+        cur.execute("""SELECT * from recipes WHERE rid = """ + query + ";")
+        results = cur.fetchall()
+        print(results)
+        print(dir(results))
+      except Recipes.DoesNotExist:
+        results = None
+  comment = None
+  context = RequestContext(request)
+  return render_to_response('edit.html', {"results": results,}, )
 
-    greeting = Greeting()
-    greeting.save()
+def submitedit(request):
+  rid = request.GET.get('rid')
+  name = request.GET.get('name')
+  appliances = request.GET.get('appliances')
+  description = request.GET.get('description')
+  videourl = request.GET.get('videourl')
+  instructions = request.GET.get('instructions')
+  cooktime = request.GET.get('cooktime')
+  servings = request.GET.get('servings')
+  con = None
+  con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
+  cur = con.cursor()
+  querystring = """UPDATE Recipes
+                   SET name = '""" + name + "', appliances='" + appliances + "', description='" + description + "', youtubevid='" + videourl + "', instructions='" + instructions + "' "
+  try:
+      cooktime = int(cooktime)
+  except ValueError:
+      cooktime = 'None'
+  if cooktime != 'None' and cooktime != '':
+    querystring += ",cooktime='" + str(cooktime) + "'"
+  try:
+      servings = int(servings)
+  except ValueError:
+      servings = 'None'
+  if servings != 'None':
+    querystring += ",servings='" + str(servings) + "'"
+  
+  querystring += "WHERE rid = """ + rid + ";"
+  print(querystring)
+  cur.execute(querystring)
+  cur.close()
+  con.commit()
+  con.close()
+  
+  return render(request, 'dashboard.html')
 
-    greetings = Greeting.objects.all()
-
-    return render(request, 'db.html', {'greetings': greetings})'''
+def deleterecipe(request):
+  q = request.GET.get('q')
+  con = None
+  con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
+  cur = con.cursor()
+  querystring = """DELETE FROM Recipes
+                   WHERE rid = """ + q + ";"
+  cur.execute(querystring)
+  cur.close()
+  con.commit()
+  con.close()
+  return render(request, 'dashboard.html')

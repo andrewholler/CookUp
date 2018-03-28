@@ -1,15 +1,65 @@
 {% if results %}
   {% for result in results %}
-    {{ results.0 }}
-    {{ results.1 }}
-    {{ results.2 }}
-    <input type=button value="Edit"/>
-    <input type=button value="Delete"/>
+    <table name="q">
+      <tr>
+        <td>
+          {{ result.1 }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ result.2 }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ result.3 }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ result.4 }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ result.5 }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ result.6 }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ result.7 }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ result.8 }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ result.9 }}
+        </td>
+      </tr>
+    </table>
+<form method="get" action="/edit/">
+  <input type="hidden" value="{{ result.0 }}" name="q"/>
+  <input type="submit" value="Edit"/>
+</form>
+<form method="get" action="/deleterecipe/">
+  <input type="hidden" value="{{ result.0 }}" name="q"/>
+  <input type="submit" value="Delete"/>
+</form>
   {% endfor %}
 {% else %}
-    <h3 class='error'>Recipe not found! Please enter a valid RID</h3>
+    <h3 class='error'>Recipe not found!</h3>
     <form method="get" action="/search/">
-      Search Recipe by ID:<input type="text" name="q" id="id_q" value="{{ query }}"/>
+      Search Recipe:<input type="text" name="q" id="id_q" value="{{ query }}"/>
       <input type="submit" value="Search"/>
     </form>
 {% endif %}
