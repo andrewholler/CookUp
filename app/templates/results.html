@@ -1,5 +1,9 @@
 <body>
-<h2><a href="/dashboard.html" style="color: #000000; text-decoration: none;">CookUp</a></h2>
+  <h2><a href="/dashboard.html" style="color: #000000; text-decoration: none;">CookUp</a></h2>
+  <form method="get" action="/search/">
+    Search Again:<input type="text" name="q" id="id_q" value="{{ query }}"/>
+    <input type="submit" value="Search"/>
+</form>
 </body>
 
 {% if results %}
