@@ -11,11 +11,13 @@
 		<h2><a href="./dashboard.html" style="color: #000000; text-decoration: none;">CookUp</a></h2>
 		<a class="topcorner" id="header1-like" href="./profile.html">My Profile</a>
 		<a class="bottommiddle" id="add_recipe" href="./submitrecipe.html">Add Recipe</a>
-		<h1 id="find-recipe" class="text-center">Find Recipes</h1>
-  <form method="get" action="/search/">
-    Search Recipes:<input type="text" name="q" id="id_q" value="{{ query }}"/>
-    <input type="submit" value="Search" />
-  </form>
+  <center>
+    <h1 id="find-recipe" class="text-center">Find Recipes</h1>
+    <form method="get" action="/search/">
+      <h3 style="color: #000000;">Search Recipes:</h3><input type="text" name="q" id="id_q" value="{{ query }}"/>
+      <input type="submit" value="Search" />
+    </form>
+  </center>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
