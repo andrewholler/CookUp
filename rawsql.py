@@ -100,6 +100,9 @@ cur.execute("""SELECT ingredient.name
                 FROM recipecontains, ingredient, recipes
                 WHERE iid = iid_id AND rid_id = rid;""")
 '''
+cur.execute("""SELECT * from recipes;""")
+x = cur.fetchall()
+print(x[0][0])
 
 cur.close()
 con.commit()

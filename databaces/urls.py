@@ -32,5 +32,7 @@ url(r'^index.html$', app.views.index, name='index'),
 url(r'^register.html$', app.views.register, name='register'),
 url(r'^dashboard.html$', app.views.dashboard, name='dashboard'),
 url(r'^profile.html$', app.views.profile, name='profile'),
+url(r'^submitrecipe.html', app.views.submitrecipe, name='submitrecipe'),
+url(r'^search/', app.views.search, name='search'),
 path('admin/', admin.site.urls)
 ]

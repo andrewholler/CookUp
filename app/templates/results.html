@@ -1,0 +1,15 @@
+{% if results %}
+  {% for result in results %}
+    {{ results.0 }}
+    {{ results.1 }}
+    {{ results.2 }}
+    <input type=button value="Edit"/>
+    <input type=button value="Delete"/>
+  {% endfor %}
+{% else %}
+    <h3 class='error'>Recipe not found! Please enter a valid RID</h3>
+    <form method="get" action="/search/">
+      Search Recipe by ID:<input type="text" name="q" id="id_q" value="{{ query }}"/>
+      <input type="submit" value="Search"/>
+    </form>
+{% endif %}
