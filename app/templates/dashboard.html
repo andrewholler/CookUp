@@ -8,8 +8,9 @@
 </head>
 <body>
 	<div class="page-header">
-		<h2>CookUp</h2> 
+		<h2>CookUp</h2>
 		<a class="topcorner" id="header1-like" href="./profile.html">My Profile</a>
+		<a class="bottommiddle" id="add_recipe" href="./submitrecipe.html">Add Recipe</a>
 		<h1 id="find-recipe" class="text-center">Find Recipes</h1>
   <form method="get" action="/search/">
     Search Recipes:<input type="text" name="q" id="id_q" value="{{ query }}"/>
@@ -18,13 +19,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container"> 
+					<div id="imaginary_container">
 						<div class="input-group stylish-input-group">
 							<input type="text" class="form-control"  placeholder="Enter ingredients separated by whitespace or commas" >
 							<span class="input-group-addon">
 								<button type="submit">
 									<span class="glyphicon glyphicon-search"></span>
-								</button>  
+								</button>
 							</span>
 						</div>
 					</div>
