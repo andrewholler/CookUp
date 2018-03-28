@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-# Create your views here.
 def index(request):
 	print(request.POST.get('email'))
 	if (request.method == "POST"):
@@ -22,9 +21,7 @@ def dashboard(request):
 def profile(request):
 	return render(request, 'profile.html')
 
-def test(request, foo=0):
-	print(request.POST)
-	return render(request, 'index.html')
+
 
 '''def db(request):
 

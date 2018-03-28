@@ -33,6 +33,5 @@ urlpatterns = [
 	url(r'^register.html$', app.views.register, name='register'),
 	url(r'^dashboard.html$', app.views.dashboard, name='dashboard'),
 	url(r'^profile.html$', app.views.profile, name='profile'),
-	path('test/<int:foo>/', app.views.test),
 	path('admin/', admin.site.urls),
 ]
