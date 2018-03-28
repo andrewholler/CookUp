@@ -27,10 +27,12 @@ import app.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-url(r'^$', app.views.index, name='index'),
-url(r'^index.html$', app.views.index, name='index'),
-url(r'^register.html$', app.views.register, name='register'),
-url(r'^dashboard.html$', app.views.dashboard, name='dashboard'),
-url(r'^profile.html$', app.views.profile, name='profile'),
-path('admin/', admin.site.urls)
+
+	url(r'^$', app.views.index, name='index'),
+	url(r'^index.html$', app.views.index, name='index'),
+	url(r'^register.html$', app.views.register, name='register'),
+	url(r'^dashboard.html$', app.views.dashboard, name='dashboard'),
+	url(r'^profile.html$', app.views.profile, name='profile'),
+	path('test/<int:foo>/', app.views.test),
+	path('admin/', admin.site.urls),
 ]

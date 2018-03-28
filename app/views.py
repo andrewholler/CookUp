@@ -3,16 +3,28 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-	return render(request, 'index.html')
+	print(request.POST.get('email'))
+	if (request.method == "POST"):
+		return render(request, 'dashboard.html')
+	else:
+		return render(request, 'index.html')
 
 def register(request):
-	return render(request, 'register.html')
+	print(request.POST)
+	if (request.method == "POST"):
+		return render(request, 'dashboard.html')
+	else:
+		return render(request, 'register.html')
 
 def dashboard(request):
 	return render(request, 'dashboard.html')
 
 def profile(request):
 	return render(request, 'profile.html')
+
+def test(request, foo=0):
+	print(request.POST)
+	return render(request, 'index.html')
 
 '''def db(request):
 
