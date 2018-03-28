@@ -35,4 +35,5 @@ url(r'^profile.html$', app.views.profile, name='profile'),
 url(r'^submitrecipe.html', app.views.submitrecipe, name='submitrecipe'),
 url(r'^search/', app.views.search, name='search'),
 path('admin/', admin.site.urls)
+
 ]

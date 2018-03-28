@@ -18,39 +18,44 @@
 						<span class="glyphicon"></span> Register
 					</div>
 					<div class="panel-body">
-						<form class="form-horizontal" role="form">
+						<form class="form-horizontal" role="form" method="POST">
+							{% csrf_token %}
 							<div class="form-group">
 								<label for="inputName" class="col-sm-3 control-label">
-								Name</label>
+								First Name</label>
 								<div class="col-sm-9">
-									<input type="Name" class="form-control" id="inputName" placeholder="Jane Doe" required>
+									<input name="firstname" type="Name" class="form-control" id="inputName" placeholder="Jane" required>
 								</div>
-							</div>
-							<div class="form-group">
+
+								<label for="inputName" class="col-sm-3 control-label">
+								Last Name</label>
+								<div class="col-sm-9">
+									<input name="lastname" type="Name" class="form-control" id="inputName" placeholder="Doe" required>
+								</div>
+
 								<label for="inputEmail" class="col-sm-3 control-label">
 								Email</label>
 								<div class="col-sm-9">
-									<input type="email" class="form-control" id="email" placeholder="janedoe@abc.com" required>
+									<input name="email" type="email" class="form-control" id="email" placeholder="janedoe@abc.com" required>
 								</div>
-							</div>
-							<div class="form-group">
+
 								<label for="inputUsername" class="col-sm-3 control-label">
 								Username</label>
 								<div class="col-sm-9">
-									<input type="Username" class="form-control" id="Username" placeholder="ChefJane" required>
+									<input name="username" type="Username" class="form-control" id="Username" placeholder="ChefJane" required>
 								</div>
-							</div>
-							<div class="form-group">
+
 								<label for="inputPassword3" class="col-sm-3 control-label">
 								Password</label>
 								<div class="col-sm-9">
-									<input type="password" class="form-control" id="inputPassword3" placeholder="Password" required>
+									<input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password" required>
 								</div>
 							</div>
+
 							<div class="form-group last">
 								<div class="col-sm-offset-3 col-sm-9">
-									<a href="./dashboard.html" class="btn btn-success btn-sm">
-									Sign up</a>
+									<button type="submit" class="btn btn-success btn-sm">
+									Sign up</button>
 									<button type="reset" class="btn btn-default btn-sm">
 										Reset
 									</button>
