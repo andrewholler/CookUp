@@ -38,4 +38,5 @@ url(r'^edit/', app.views.edit, name='edit'),
 url(r'^submitedit', app.views.submitedit, name='submitedit'),
 url(r'^deleterecipe', app.views.deleterecipe, name='deleterecipe'),
 path('admin/', admin.site.urls)
+
 ]

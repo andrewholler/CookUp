@@ -19,21 +19,23 @@
 						<span class="glyphicon glyphicon-lock"></span> Login
 					</div>
 					<div class="panel-body">
-						<form class="form-horizontal" role="form">
+						<form class="form-horizontal" role="form" method="POST">
+							{% csrf_token %}
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">
-								Email</label>
+									Email
+								</label>
 								<div class="col-sm-9">
-									<input type="email" class="form-control" id="inputEmail3" placeholder="janedoe@abc.com" required>
+									<input name="email" type="email" class="form-control" id="inputEmail3" placeholder="janedoe@abc.com" value="{{ email_address }}" required />
 								</div>
-							</div>
-							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-3 control-label">
 								Password</label>
 								<div class="col-sm-9">
-									<input type="password" class="form-control" id="inputPassword3" placeholder="Password" required>
+									<input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password" value="{{ password }}" required>
 								</div>
+
 							</div>
+							
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-9">
 									<div class="checkbox">
@@ -46,11 +48,8 @@
 							</div>
 							<div class="form-group last">
 								<div class="col-sm-offset-3 col-sm-9">
-									<a href="./dashboard.html" class="btn btn-success btn-sm">
-									Sign in</a>
-									<button type="reset" class="btn btn-default btn-sm">
-										Reset
-									</button>
+									<button type="submit" class="btn btn-success btn-sm">Sign In</button>
+									<button type="reset" class="btn btn-default btn-sm">Reset</button>
 								</div>
 							</div>
 						</form>
