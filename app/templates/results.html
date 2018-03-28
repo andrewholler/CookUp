@@ -1,60 +1,71 @@
 {% if results %}
   {% for result in results %}
-    <table name="q">
+    <table name="q" border="1">
       <tr>
         <td>
-          {{ result.1 }}
+          <b>Recipe Name: </b>
         </td>
+        <td>{{ result.1 }}</td>
       </tr>
       <tr>
         <td>
-          {{ result.2 }}
+          <b>Suggested Appliances: </b>
         </td>
+        <td>{{ result.2 }}</td>
       </tr>
       <tr>
         <td>
-          {{ result.3 }}
+          <b>Description: </b>
         </td>
+        <td>{{ result.3 }}</td>
       </tr>
       <tr>
         <td>
-          {{ result.4 }}
+          <b>Video URL: </b>
         </td>
+        <td>{{ result.4 }}</td>
       </tr>
       <tr>
         <td>
-          {{ result.5 }}
+          <b>Times Rated: </b>
         </td>
+        <td>{{ result.5 }}</td>
       </tr>
       <tr>
         <td>
-          {{ result.6 }}
+          <b>Instructions: </b>
         </td>
+        <td>{{ result.6 }}</td>
       </tr>
       <tr>
         <td>
-          {{ result.7 }}
+          <b>Rating: </b>
         </td>
+        <td>{{ result.7 }}</td>
       </tr>
       <tr>
         <td>
-          {{ result.8 }}
+          <b>Cook Time: </b>
         </td>
+        <td>{{ result.8 }}</td>
       </tr>
       <tr>
         <td>
-          {{ result.9 }}
+          <b>Servings: </b>
         </td>
+        <td>{{ result.9 }}</td>
       </tr>
     </table>
-<form method="get" action="/edit/">
-  <input type="hidden" value="{{ result.0 }}" name="q"/>
-  <input type="submit" value="Edit"/>
-</form>
-<form method="get" action="/deleterecipe/">
-  <input type="hidden" value="{{ result.0 }}" name="q"/>
-  <input type="submit" value="Delete"/>
-</form>
+    <form method="get" action="/edit/">
+      <input type="hidden" value="{{ result.0 }}" name="q"/>
+      <input type="submit" value="Edit"/>
+    </form>
+    <form method="get" action="/deleterecipe/">
+      <input type="hidden" value="{{ result.0 }}" name="q"/>
+      <input type="submit" value="Delete"/>
+    </form>
+    <br>
+
   {% endfor %}
 {% else %}
     <h3 class='error'>Recipe not found!</h3>
