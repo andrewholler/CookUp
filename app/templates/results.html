@@ -68,9 +68,10 @@
 
   {% endfor %}
 {% else %}
-    <h3 class='error'>Recipe not found!</h3>
-    <form method="get" action="/search/">
-      Search Recipe:<input type="text" name="q" id="id_q" value="{{ query }}"/>
-      <input type="submit" value="Search"/>
-    </form>
+  <h2 class='error'>No recipe names containing '{{ keyword }}'</h2>
+  <h4> Try searching with a different keyword </h4>
+  <form method="get" action="/search/">
+    Search Recipe:<input type="text" name="q" id="id_q" value="{{ query }}"/>
+    <input type="submit" value="Search"/>
+  </form>
 {% endif %}
