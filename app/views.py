@@ -45,7 +45,21 @@ def dashboard(request):
 
 @login_required
 def profile(request):
-	return render(request, 'profile.html')
+  username = None
+  if request.user.is_authenticated:
+    username = request.user.username
+  con = None
+  con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
+  cur = con.cursor()
+  cur.execute(""" SELECT avg(Recipes.rating) 
+                  FROM ((Userrecipe
+                    INNER JOIN auth_user ON Userrecipe.uid_id = auth_user.id)
+                    INNER JOIN Recipes ON Userrecipe.rid_id = recipes.rid)
+                  WHERE Userrecipe.uid_id = """ + str(request.user.id) + ";")
+  user_rating = cur.fetchall()[0][0]
+  cur.close()
+  con.close()
+  return render(request, 'profile.html', {"rating": "%.2f" % user_rating})
 
 @login_required
 def submitrecipe(request):
