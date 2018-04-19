@@ -12,21 +12,6 @@ from psycopg2 import connect
 import sys
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'register.html', {'form': form})
-
-
 def register(request):
   type(request.POST)
   myDict = dict(request.POST)
@@ -58,12 +43,15 @@ def register(request):
 def dashboard(request):
 	return render(request, 'dashboard.html')
 
+@login_required
 def profile(request):
 	return render(request, 'profile.html')
 
+@login_required
 def submitrecipe(request):
  return render(request, 'submitrecipe.html')
 
+@login_required
 def search(request):
     query = request.GET.get('q')
     if query:
@@ -85,6 +73,7 @@ def search(request):
     context = RequestContext(request)
     return render_to_response('results.html', {"results": results, "keyword": query}, )
 
+@login_required
 def edit(request):
   query = request.GET.get('q')
   print(query)
@@ -103,6 +92,7 @@ def edit(request):
   context = RequestContext(request)
   return render_to_response('edit.html', {"results": results,}, )
 
+@login_required
 def submitedit(request):
   rid = request.GET.get('rid')
   name = request.GET.get('name')
@@ -139,6 +129,7 @@ def submitedit(request):
   
   return redirect(dashboard)
 
+@login_required
 def deleterecipe(request):
   q = request.GET.get('q')
   con = None
@@ -152,6 +143,7 @@ def deleterecipe(request):
   con.close()
   return redirect(dashboard)
 
+@login_required
 def addrecipe(request):
   name = request.GET.get('name')
   appliances = request.GET.get('appliances')
