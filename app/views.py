@@ -57,6 +57,8 @@ def profile(request):
                     INNER JOIN Recipes ON Userrecipe.rid_id = recipes.rid)
                   WHERE Userrecipe.uid_id = """ + str(request.user.id) + ";")
   user_rating = cur.fetchall()[0][0]
+  if user_rating == None:
+    user_rating = 0.0
   cur.close()
   con.close()
   return render(request, 'profile.html', {"rating": "%.2f" % user_rating})
