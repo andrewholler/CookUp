@@ -16,6 +16,7 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.urls import path
+from django.views.generic import RedirectView
 
 from django.contrib import admin
 admin.autodiscover()
@@ -27,8 +28,8 @@ import app.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-url(r'^$', app.views.index, name='index'),
-url(r'^index.html$', app.views.index, name='index'),
+url(r'^$', app.views.dashboard),
+url(r'^index.html$', RedirectView.as_view(pattern_name='dashboard', permanent=False)),
 url(r'^register.html$', app.views.register, name='register'),
 url(r'^dashboard.html$', app.views.dashboard, name='dashboard'),
 url(r'^profile.html$', app.views.profile, name='profile'),
@@ -38,6 +39,10 @@ url(r'^edit/', app.views.edit, name='edit'),
 url(r'^submitedit', app.views.submitedit, name='submitedit'),
 url(r'^deleterecipe', app.views.deleterecipe, name='deleterecipe'),
 url(r'^addrecipe', app.views.addrecipe, name='addrecipe'),
-path('admin/', admin.site.urls)
+path('admin/', admin.site.urls),
+]
 
+#Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

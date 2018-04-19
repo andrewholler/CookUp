@@ -1,3 +1,5 @@
+{% block content %}
+
 <!-- alt + shift + f -->
 <html>
 <head>
@@ -19,20 +21,33 @@
 						<span class="glyphicon glyphicon-lock"></span> Login
 					</div>
 					<div class="panel-body">
-						<form class="form-horizontal" role="form" method="POST">
+        <center><div>
+          {% if next %}
+            {% if user.is_authenticated %}
+              <p>Your account doesn't have access to this page. To proceed,
+              please login with an account that has access.</p>
+            {% else %}
+              <p>Please login to see {{ next }}</p>
+            {% endif %}
+          {% endif %}
+          {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+          {% endif %}
+        </div></center>
+						<form class="form-horizontal" role="form" method="POST" action="{% url 'login' %}">
 							{% csrf_token %}
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">
-									Email
+									Username
 								</label>
 								<div class="col-sm-9">
-									<input name="email" type="email" class="form-control" id="inputEmail3" placeholder="janedoe@abc.com" value="{{ email_address }}" required />
+         <input class="form-control" placeholder="janedoe" name="username" autofocus="" maxlength="254" required="" id="inputEmail3" type="text">
 								</div>
 								<label for="inputPassword3" class="col-sm-3 control-label">
 								Password</label>
 								<div class="col-sm-9">
-									<input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password" value="{{ password }}" required>
-								</div>
+								 <input name="password" class="form-control" required="" id="inputPassword3" placeholder="Password" type="password">
+        </div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-9">
@@ -47,13 +62,14 @@
 							<div class="form-group last">
 								<div class="col-sm-offset-3 col-sm-9">
 									<button type="submit" class="btn btn-success btn-sm">Sign In</button>
-									<button type="reset" class="btn btn-default btn-sm">Reset</button>
+         <input type="hidden" name="next" value="{{ next }}" />
+									<a href="{% url 'password_reset' %}" type="reset" class="btn btn-default btn-sm">Reset</a>
 								</div>
 							</div>
 						</form>
 					</div>
 					<div class="panel-footer">
-						Not Registered? <a href="./register.html">Register here</a>
+						Not Registered? <a href="{%url 'register'%}">Register here</a>
 					</div>
 				</div>
 			</div>
@@ -65,3 +81,5 @@
 
 </body>
 </html>
+
+{% endblock %}

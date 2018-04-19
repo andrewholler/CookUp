@@ -1,0 +1,21 @@
+{% block content %}
+
+<!-- alt + shift + f -->
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link href = "/static/app/style.css" rel = "stylesheet">
+</head>
+<body>
+	<div class="page-header text-center">
+		<h2>Logged out!</h2>
+  <h4><a href="{% url 'login'%}" style="color: #000000; text-decoration: none;">Click here to login again.</a></h4>
+	</div>
+	<script src = "https://code.jquery.com/jquery.js"></script>
+	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+{% endblock %}

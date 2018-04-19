@@ -2,39 +2,59 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext
 from app.models import Recipes
+from app.forms import SignUpForm
 from django.shortcuts import render_to_response
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
 import psycopg2
 from psycopg2 import connect
 import sys
 
-def index(request):
-	print(request.POST.get('email'))
-	if (request.method == "POST"):
-		return render(request, 'dashboard.html')
-	else:
-		return render(request, 'index.html')
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'register.html', {'form': form})
+
 
 def register(request):
-	# print(request.POST)
-	type(request.POST)
-	myDict = dict(request.POST)
-	# print(myDict)
-	if (request.method == "POST"):
-		con = None
-		con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
-		cur = con.cursor()
-		print("""INSERT INTO Users (firstname, lastname, username, email, password) VALUES
-   						('"""+myDict.get('firstname')[0]+"""','"""+myDict.get('lastname')[0]+"""','"""+myDict.get('username')[0]+"""','"""+myDict.get('email')[0]+"""','"""+myDict.get('password')[0]+"""');""")
-		cur.execute("""INSERT INTO Users (firstname, lastname, username, email, password) VALUES
-  						('"""+myDict.get('firstname')[0]+"""','"""+myDict.get('lastname')[0]+"""','"""+myDict.get('username')[0]+"""','"""+myDict.get('email')[0]+"""','"""+myDict.get('password')[0]+"""');""")
-		con.commit()
-		cur.close()
-		con.close()
-		return render(request, 'dashboard.html')
-	else:
-		return render(request, 'register.html')
+  type(request.POST)
+  myDict = dict(request.POST)
+  if (request.method == "POST"):
+    '''con = None
+    con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
+    cur = con.cursor()
+    print("""INSERT INTO Users (firstname, lastname, username, email, password) VALUES
+           ('"""+myDict.get('firstname')[0]+"""','"""+myDict.get('lastname')[0]+"""','"""+myDict.get('username')[0]+"""','"""+myDict.get('email')[0]+"""','"""+myDict.get('password')[0]+"""');""")
+    cur.execute("""INSERT INTO Users (firstname, lastname, username, email, password) VALUES
+          ('"""+myDict.get('firstname')[0]+"""','"""+myDict.get('lastname')[0]+"""','"""+myDict.get('username')[0]+"""','"""+myDict.get('email')[0]+"""','"""+myDict.get('password')[0]+"""');""")
+    con.commit()
+    cur.close()
+    con.close()
+    return render(request, 'dashboard.html')'''
+    form = SignUpForm(request.POST)
+    if form.is_valid():
+        form.save()
+        username = form.cleaned_data.get('username')
+        raw_password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=raw_password)
+        login(request, user)
+        return redirect('login')
+  else:
+		  form = SignUpForm()
+  return render(request, 'register.html', {'form': form})
 
+@login_required
 def dashboard(request):
 	return render(request, 'dashboard.html')
 
