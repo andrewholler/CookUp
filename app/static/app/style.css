@@ -67,3 +67,7 @@ h2 {
     position:relative;
     left:35%;
 }
+
+.delete-ingredient-icon{
+    float: right;
+}

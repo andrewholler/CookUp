@@ -41,7 +41,7 @@ def register(request):
 
 @login_required
 def dashboard(request):
-	return render(request, 'dashboard.html')
+  return render(request, 'dashboard.html')
 
 @login_required
 def profile(request):
@@ -168,6 +168,7 @@ def addrecipe(request):
   instructions = request.GET.get('instructions')
   cooktime = request.GET.get('cooktime')
   servings = request.GET.get('servings')
+  ingredients = request.GET.getlist("ingredient")
   con = None
   con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
   cur = con.cursor()
