@@ -37,6 +37,7 @@ function searchIngredient() {
       li.value = opt.name;
       li.style = "cursor: pointer";
       li.onclick = function(li){addIngredient(li)};
+      li.id = opt.ndbno;
       el.appendChild(li);
   }
 }
@@ -45,24 +46,56 @@ function addIngredient(element) {
   // Add an ingredient to the ingredient list
   var list = document.getElementById("ingredient-list");
   
+  // Add the quantity input
   var div = document.createElement("div");
   div.className = "col-lg-2";
   list.appendChild(div);
   var input = document.createElement("input");
-  input.type = "text";
+  input.type = "number";
+  input.value = 0;
+  input.min = 0;
   input.className = "form-control";
   input.name = "ingredient-amount";
+  input.setAttribute("onchange", "updateCalories(this);");
   div.appendChild(input);
   
+  // Add the measures input
   div = document.createElement("div");
   div.className = "col-lg-2";
   list.appendChild(div);
-  input = document.createElement("input");
-  input.type = "text";
-  input.className = "form-control";
-  input.name = "ingredient-measure";
-  div.appendChild(input);
+  var select = document.createElement("select");
+  select.className = "form-control";
+  select.name = "ingredient-measure";
+  select.form = "recipeForm";
+  select.setAttribute("onchange", "updateCalories(this);");
+  div.appendChild(select);
   
+  var url = "https://api.nal.usda.gov/ndb/V2/reports?ndbno=" + element.currentTarget.id + "&type=b&format=json&api_key=W0hVxQq8rODeGQiB06CoDvHnhgibC6eUT9CsZjZD";
+  console.log(url);
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", url, false);
+  xhttp.send();
+  var response = JSON.parse(xhttp.responseText);
+  
+  if (response.notfound) {
+    console.log("Couldn't get food report for ingredient " + element.currentTarget.id);
+  }
+  else {
+    for(var i = 0; i < response.foods[0].food.nutrients.length; i++) {
+      var nutrient = response.foods[0].food.nutrients[i];
+      if (nutrient.nutrient_id == "208") {
+        for(var j = 0; j < nutrient.measures.length; j++) {
+          var option = document.createElement("option");
+          option.value = nutrient.measures[j].label;
+          option.innerText = nutrient.measures[j].label;
+          option.id = nutrient.measures[j].eqv;
+          select.appendChild(option);
+        }
+      }
+    }
+  }
+  
+  // Add the ingredient
   var ingredient = document.createElement("div");
   ingredient.className = "col-sm-8";
   list.appendChild(ingredient);
@@ -94,4 +127,17 @@ function addIngredient(element) {
   while (select.firstChild) {
     select.removeChild(select.firstChild);
   }
+}
+
+function updateCalories(element) {
+  calories_box = document.getElementById("calories");
+  ingredients = document.getElementById("ingredient-list");
+  
+  var newval = 0.0;
+  for(var i = 0; i < ingredients.children.length; i += 3) {
+    newval += ingredients.children[i].firstChild.value*parseFloat(ingredients.children[i+1].firstChild.selectedOptions[0].id);
+  }
+  calories_box.value = newval;
+  
+  //calories_box.value = parseFloat(calories_box.value) + (parseFloat(element.selectedOptions[0].id))*(element.parentNode.previousSibling.firstChild.value);
 }
