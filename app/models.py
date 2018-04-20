@@ -161,6 +161,7 @@ class Recipes(models.Model):
     rating = models.IntegerField(blank=True, null=True)
     cooktime = models.IntegerField(blank=True, null=True)
     servings = models.IntegerField(blank=True, null=True)
+    calories = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = False
