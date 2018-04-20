@@ -1,5 +1,7 @@
 <html>
 <head>
+ {% load static %}
+ <script src="{% static 'app/app.js' %}"></script>
 	<link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -7,103 +9,127 @@
 	<link href = "/static/app/style.css" rel = "stylesheet">
 </head>
 <body>
+ <script type="text/javascript">
+  function stopRKey(evt) {
+    var evt = (evt) ? evt : ((event) ? event : null);
+    var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+    if ((evt.keyCode == 13) && (node.type=="text"))  {return false;}
+  }
+  document.onkeypress = stopRKey;
+</script>
 	<div class="page-header">
 		<h2><a href="/dashboard.html" style="color: #000000; text-decoration: none;">CookUp</a></h2>
 		<a class="topcorner" id="header1-like" href="./profile.html">My Profile</a>
   <form method="get" action="/addrecipe/">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container"> 
-						<div class="input-group stylish-input-group">
-							<input type="text" class="form-control"  placeholder="Enter recipe name" name="name">
-							<span class="input-group-addon">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-  <div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container"> 
-						<div class="input-group stylish-input-group">
-							<input type="text" class="form-control"  placeholder="Enter recipe appliances" name="appliances">
-							<span class="input-group-addon">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-  <div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container"> 
-						<div class="input-group stylish-input-group">
-							<input type="text" class="form-control"  placeholder="Enter recipe description" name="description">
-							<span class="input-group-addon">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-  <div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container"> 
-						<div class="input-group stylish-input-group">
-							<input type="text" class="form-control"  placeholder="Enter recipe youtube video URL" name="videourl">
-							<span class="input-group-addon">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-  <div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container"> 
-						<div class="input-group stylish-input-group">
-							<input type="text" class="form-control"  placeholder="Enter recipe instructions" name="instructions">
-							<span class="input-group-addon">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-  <div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container"> 
-						<div class="input-group stylish-input-group">
-							<input type="text" class="form-control"  placeholder="Enter recipe cooktime" name="cooktime">
-							<span class="input-group-addon">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-  <div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div id="imaginary_container"> 
-						<div class="input-group stylish-input-group">
-							<input type="text" class="form-control"  placeholder="Enter recipe servings" name="servings">
-							<span class="input-group-addon">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-  <center><input type="submit" value="Submit"></center>
-   </form>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container"> 
+        <div class="input-group stylish-input-group">
+         <input type="text" class="form-control"  placeholder="Enter recipe name" name="name">
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container"> 
+        <div class="input-group stylish-input-group">
+         <input type="text" class="form-control"  placeholder="Enter recipe appliances" name="appliances">
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container"> 
+        <div class="input-group stylish-input-group">
+         <input type="text" class="form-control"  placeholder="Enter recipe description" name="description">
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container"> 
+        <div class="input-group stylish-input-group">
+         <input type="text" class="form-control"  placeholder="Enter recipe youtube video URL" name="videourl">
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container"> 
+        <div class="input-group stylish-input-group">
+         <input type="text" class="form-control"  placeholder="Enter recipe instructions" name="instructions">
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container"> 
+        <div class="input-group stylish-input-group">
+         <input type="text" class="form-control"  placeholder="Enter recipe cooktime" name="cooktime">
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container"> 
+        <div class="input-group stylish-input-group">
+         <input type="text" class="form-control"  placeholder="Enter recipe servings" name="servings">
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container"> 
+        <div class="input-group stylish-input-group">
+         <input id="thesearchbox" type="text" class="form-control"  placeholder="Add Ingredients">
+         <span class="input-group-addon">
+           <span class="glyphicon glyphicon-search" onclick="searchIngredient()" style="cursor: pointer"></span>
+         </span>
+        </div>
+       </div>
+       <div id="testing">
+       </div>
+      </div>
+     </div>
+    </div>
+    <center><input type="submit" value="Submit"></center>
+  </form>
   </div>
 </body>
 </html>
