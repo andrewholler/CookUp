@@ -18,6 +18,7 @@ function searchIngredient() {
   
   var el = document.createElement("ul");
   el.className = "list-group";
+  el.id = "search-result-list"
   select.appendChild(el);
   
   if (response.errors) {
@@ -41,10 +42,29 @@ function searchIngredient() {
 }
 
 function addIngredient(element) {
+  // Add an ingredient to the ingredient list
   var list = document.getElementById("ingredient-list");
   
+  var div = document.createElement("div");
+  div.className = "col-lg-2";
+  list.appendChild(div);
+  var input = document.createElement("input");
+  input.type = "text";
+  input.className = "form-control";
+  input.name = "ingredient-amount";
+  div.appendChild(input);
+  
+  div = document.createElement("div");
+  div.className = "col-lg-2";
+  list.appendChild(div);
+  input = document.createElement("input");
+  input.type = "text";
+  input.className = "form-control";
+  input.name = "ingredient-measure";
+  div.appendChild(input);
+  
   var ingredient = document.createElement("div");
-  ingredient.classname = "input-group stylish-input-group";
+  ingredient.className = "col-sm-8";
   list.appendChild(ingredient);
   
   var input = document.createElement("input");
@@ -65,7 +85,13 @@ function addIngredient(element) {
   
   var deletebutton = document.createElement("span");
   deletebutton.className = "glyphicon glyphicon-remove"
-  deletebutton.setAttribute("onclick", "this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode);");
+  deletebutton.setAttribute("onclick", "this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode.previousSibling); this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode.previousSibling); this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode);");
   deletebutton.style = "cursor: pointer";
   span.appendChild(deletebutton);
+  
+  // Deletes search result list after you select an item
+  select = document.getElementById("search-result-list");
+  while (select.firstChild) {
+    select.removeChild(select.firstChild);
+  }
 }

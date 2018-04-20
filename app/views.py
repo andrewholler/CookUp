@@ -169,6 +169,9 @@ def addrecipe(request):
   cooktime = request.GET.get('cooktime')
   servings = request.GET.get('servings')
   ingredients = request.GET.getlist("ingredient")
+  ingredientAmounts = request.GET.getlist("ingredient-amount")
+  ingredientMeasures = request.GET.getlist("ingredient-measure")
+  print(ingredients, ingredientAmounts, ingredientMeasures)
   con = None
   con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
   cur = con.cursor()
