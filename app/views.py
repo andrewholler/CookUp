@@ -196,6 +196,8 @@ def addrecipe(request):
   
   for i, ingredient in enumerate(ingredients):
     print(i, ingredient)
+    ingredient = ingredient.replace("'", "")
+    ingredient = ingredient.replace('"', "")
     ingredient_exists_query = """SELECT EXISTS(SELECT 1 FROM ingredient WHERE name='""" + ingredient + """');"""
     cur.execute(ingredient_exists_query)
     iid = 0
@@ -211,6 +213,10 @@ def addrecipe(request):
     recipecontains_query = """INSERT INTO recipecontains (iid_id, rid_id, quantity, measure)
                               VALUES ('"""+str(iid)+"""', '"""+str(rid)+"""', '"""+str(ingredientAmounts[i])+"""', '"""+ingredientMeasures[i]+"""');"""
     cur.execute(recipecontains_query)
+  
+  userrecipe_query = """INSERT INTO userrecipe (rid_id, uid_id)
+                        VALUES ('""" + str(rid) + """', '""" + str(request.user.id) + """');"""
+  cur.execute(userrecipe_query)
   
   cur.close()
   con.commit()

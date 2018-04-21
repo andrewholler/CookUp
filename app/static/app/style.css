@@ -71,3 +71,8 @@ h2 {
 .delete-ingredient-icon{
     float: right;
 }
+
+.cookup {
+  position:relative;
+  left: 1.5cm;
+}
