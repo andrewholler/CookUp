@@ -59,9 +59,22 @@ def profile(request):
   user_rating = cur.fetchall()[0][0]
   if user_rating == None:
     user_rating = 0.0
+    
+  recipes = None
+  cur.execute("""SELECT * FROM recipes, userrecipe
+                 WHERE uid_id=""" + str(request.user.id) + """ AND rid_id=rid;""")
+  recipes = cur.fetchall()
+  
+  for i, recipe in enumerate(recipes):
+    rid = recipe[0]
+    cur.execute("""select quantity, measure, name
+                   from recipecontains, ingredient
+                   where rid_id='""" + str(rid) + """' and iid_id = iid;""")
+    recipes[i] = recipes[i], tuple(cur.fetchall())
+  
   cur.close()
   con.close()
-  return render(request, 'profile.html', {"rating": "%.2f" % user_rating})
+  return render(request, 'profile.html', {"rating": "%.2f" % user_rating, "recipes": recipes})
 
 @login_required
 def submitrecipe(request):
@@ -69,17 +82,35 @@ def submitrecipe(request):
 
 @login_required
 def search(request):
-    query = request.GET.get('q')
-    if query:
+    keyword = request.GET.get('q')
+    maxcalories = request.GET.get('cal')
+    ingredient = request.GET.get('ingr')
+    print("max", maxcalories)
+    print("ingr", ingredient)
+    if keyword or maxcalories or ingredient:
         con = None
         con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
         cur = con.cursor()
         try:
-          cur.execute("""SELECT * from recipes
-                         WHERE name ILIKE '%""" + str(query) + "%';")
+          querystring = """SELECT * from recipes
+                         WHERE 1=1"""
+          if keyword:
+            querystring += """ AND name ILIKE '%""" + str(keyword) + "%'"
+          if maxcalories:
+            querystring += """ AND calories <= """ + str(maxcalories)
+          if ingredient:
+            querystring += """ INTERSECT SELECT * from recipes WHERE rid IN (SELECT rid_id FROM recipecontains, ingredient WHERE ingredient.name ILIKE '%""" + ingredient + """%' AND ingredient.iid = recipecontains.iid_id)"""
+          querystring += ";"
+          print(querystring)
+          cur.execute(querystring)
           results = cur.fetchall()
-          print(results)
-          print(dir(results))
+          
+          for i, result in enumerate(results):
+            rid = result[0]
+            cur.execute("""select quantity, measure, name
+                           from recipecontains, ingredient
+                           where rid_id='""" + str(rid) + """' and iid_id = iid;""")
+            results[i] = results[i], tuple(cur.fetchall())
         except Recipes.DoesNotExist:
           results = None
     else:
@@ -87,7 +118,7 @@ def search(request):
     
     comment = None
     context = RequestContext(request)
-    return render_to_response('results.html', {"results": results, "keyword": query}, )
+    return render_to_response('results.html', {"results": results, "keyword": keyword, "maxcalories": maxcalories, "ingredient": ingredient}, )
 
 @login_required
 def edit(request):

@@ -13,29 +13,29 @@
         <td>
           <b>Recipe Name: </b>
         </td>
-        <td>{{ result.1 }}</td>
+        <td>{{ result.0.1 }}</td>
       </tr>
       <tr>
         <td>
           <b>Suggested Appliances: </b>
         </td>
-        <td>{{ result.2 }}</td>
+        <td>{{ result.0.2 }}</td>
       </tr>
       <tr>
         <td>
           <b>Description: </b>
         </td>
-        <td>{{ result.3 }}</td>
+        <td>{{ result.0.3 }}</td>
       </tr>
       <tr>
         <td>
           <b>Video URL: </b>
         </td>
         <td>
-          {% if result.4 != "None" %}
-            <a href="{{ result.4 }}">{{ result.4 }}</a>
+          {% if result.0.4 != "None" %}
+            <a href="{{ result.0.4 }}">{{ result.0.4 }}</a>
           {% else %}
-            {{ result.4 }}
+            {{ result.0.4 }}
           {% endif %}
         </td>
       </tr>
@@ -43,53 +43,76 @@
         <td>
           <b>Times Rated: </b>
         </td>
-        <td>{{ result.5 }}</td>
+        <td>{{ result.0.5 }}</td>
+      </tr>
+      <tr>
+        <td>
+          <b>Ingredients: </b>
+        </td>
+        <td>
+          {% for ingredient in result.1 %}
+            {% for item in ingredient %}
+              {{item}}
+            {% endfor %}
+          ,
+          {% endfor %}
+        </td>
       </tr>
       <tr>
         <td>
           <b>Instructions: </b>
         </td>
-        <td>{{ result.6 }}</td>
+        <td>{{ result.0.6 }}</td>
       </tr>
       <tr>
         <td>
           <b>Rating: </b>
         </td>
-        <td>{{ result.7 }}</td>
+        <td>{{ result.0.7 }}</td>
       </tr>
       <tr>
         <td>
           <b>Cook Time: </b>
         </td>
-        <td>{{ result.8 }}</td>
+        <td>{{ result.0.8 }}</td>
       </tr>
       <tr>
         <td>
           <b>Servings: </b>
         </td>
-        <td>{{ result.9 }}</td>
+        <td>{{ result.0.9 }}</td>
       </tr>
       <tr>
         <td>
           <b>Calories: </b>
         </td>
-        <td>{{ result.10 }}</td>
+        <td>{{ result.0.10 }}</td>
       </tr>
     </table>
     <form method="get" action="/edit/">
-      <input type="hidden" value="{{ result.0 }}" name="q"/>
+      <input type="hidden" value="{{ result.0.0 }}" name="q"/>
       <input type="submit" value="Edit"/>
     </form>
     <form method="get" action="/deleterecipe/">
-      <input type="hidden" value="{{ result.0 }}" name="q"/>
+      <input type="hidden" value="{{ result.0.0 }}" name="q"/>
       <input type="submit" value="Delete"/>
     </form>
     <br>
 
   {% endfor %}
 {% else %}
-  <h2 class='error'>No recipe names containing '{{ keyword }}'</h2>
-  <h4> Try searching with a different keyword </h4>
+  <h2 class='error'>No recipes with
+    {% if keyword %}
+      , keyword {{ keyword}}
+    {% endif %}
+    {% if maxcalories %}
+      , calories <= {{ maxcalories}}
+    {% endif %}
+    {% if ingredient %}
+      , ingredient {{ ingredient}}
+    {% endif %}
+  </h2>
+  <h4> Try searching with a different parameters.</h4>
   <form method="get" action="/search/">
     Search Recipe:<input type="text" name="q" id="id_q" value="{{ query }}"/>
     <input type="submit" value="Search"/>
