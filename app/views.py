@@ -118,16 +118,18 @@ def submitedit(request):
   instructions = request.GET.get('instructions')
   cooktime = request.GET.get('cooktime')
   servings = request.GET.get('servings')
+  calories = request.GET.get('calories')
   con = None
   con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
   cur = con.cursor()
   querystring = """UPDATE Recipes
-                   SET name = '""" + name + "', appliances='" + appliances + "', description='" + description + "', youtubevid='" + videourl + "', instructions='" + instructions + "' "
+                   SET name = '""" + name + "', appliances='" + appliances + "', description='" + description + "', youtubevid='" + videourl + "', instructions='" + instructions + "', calories='" + calories + "' "
   try:
       cooktime = int(cooktime)
   except ValueError:
       cooktime = 0
   querystring += ",cooktime='" + str(cooktime) + "'"
+  print(querystring)
   
   try:
       servings = int(servings)
@@ -169,15 +171,11 @@ def addrecipe(request):
   cooktime = request.GET.get('cooktime')
   servings = request.GET.get('servings')
   calories = request.GET.get('calories')
-  ingredients = request.GET.getlist("ingredient")
-  ingredientAmounts = request.GET.getlist("ingredient-amount")
-  ingredientMeasures = request.GET.getlist("ingredient-measure")
-  print(calories, ingredients, ingredientAmounts, ingredientMeasures)
   con = None
   con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
   cur = con.cursor()
-  querystring = """INSERT INTO Recipes (name, appliances, description, youtubevid, instructions, cooktime, servings) VALUES (
-                   '""" + name + "', '" + appliances + "', '" + description + "', '" + videourl + "', '" + instructions + "' "
+  querystring = """INSERT INTO Recipes (name, appliances, description, youtubevid, instructions, calories, cooktime, servings) VALUES (
+                   '""" + name + "', '" + appliances + "', '" + description + "', '" + videourl + "', '" + instructions + "', '" + calories + "' "
   try:
       cooktime = int(cooktime)
   except ValueError:
@@ -188,12 +186,33 @@ def addrecipe(request):
   except ValueError:
       servings = 1
   querystring += ",'" + str(servings) + "'"
-  
-  querystring += ");"
-  print(querystring)
+  querystring += ") RETURNING rid;"
   cur.execute(querystring)
+  
+  rid = cur.fetchall()[0][0]
+  ingredients = request.GET.getlist("ingredient")
+  ingredientAmounts = request.GET.getlist("ingredient-amount")
+  ingredientMeasures = request.GET.getlist("ingredient-measure")
+  
+  for i, ingredient in enumerate(ingredients):
+    print(i, ingredient)
+    ingredient_exists_query = """SELECT EXISTS(SELECT 1 FROM ingredient WHERE name='""" + ingredient + """');"""
+    cur.execute(ingredient_exists_query)
+    iid = 0
+    if not cur.fetchall()[0][0]:
+      ingredient_insert_query = """INSERT INTO ingredient (name) VALUES ('""" + ingredient + """')
+                                   RETURNING iid;"""
+      cur.execute(ingredient_insert_query)
+      iid = cur.fetchall()[0][0]
+    else:
+      get_ingredient_iid_query = """SELECT iid FROM ingredient WHERE name='""" + ingredient + """';"""
+      cur.execute(get_ingredient_iid_query)
+      iid = cur.fetchall()[0][0]
+    recipecontains_query = """INSERT INTO recipecontains (iid_id, rid_id, quantity, measure)
+                              VALUES ('"""+str(iid)+"""', '"""+str(rid)+"""', '"""+str(ingredientAmounts[i])+"""', '"""+ingredientMeasures[i]+"""');"""
+    cur.execute(recipecontains_query)
+  
   cur.close()
   con.commit()
   con.close()
-  
   return redirect(dashboard)
