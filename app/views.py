@@ -99,7 +99,7 @@ def search(request):
           if maxcalories:
             querystring += """ AND calories <= """ + str(maxcalories)
           if ingredient:
-            querystring += """ INTERSECT SELECT * from recipes WHERE rid IN (SELECT rid_id FROM recipecontains, ingredient WHERE ingredient.name ILIKE '%""" + ingredient + """%' AND ingredient.iid = recipecontains.iid_id)"""
+            querystring += """ INTERSECT SELECT * from recipes WHERE rid IN (SELECT rid_id FROM recipecontains, ingredient WHERE (ingredient.name ILIKE '%""" + ingredient + """%' OR recipecontains.measure ILIKE '%"""+ ingredient +"""%') AND ingredient.iid = recipecontains.iid_id)"""
           querystring += ";"
           print(querystring)
           cur.execute(querystring)
