@@ -85,9 +85,8 @@ def search(request):
     keyword = request.GET.get('q')
     maxcalories = request.GET.get('cal')
     ingredient = request.GET.get('ingr')
-    print("max", maxcalories)
-    print("ingr", ingredient)
-    if keyword or maxcalories or ingredient:
+    user = request.GET.get('user')
+    if keyword or maxcalories or ingredient or user:
         con = None
         con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
         cur = con.cursor()
@@ -100,6 +99,8 @@ def search(request):
             querystring += """ AND calories <= """ + str(maxcalories)
           if ingredient:
             querystring += """ INTERSECT SELECT * from recipes WHERE rid IN (SELECT rid_id FROM recipecontains, ingredient WHERE (ingredient.name ILIKE '%""" + ingredient + """%' OR recipecontains.measure ILIKE '%"""+ ingredient +"""%') AND ingredient.iid = recipecontains.iid_id)"""
+          if user:
+            querystring += """ INTERSECT SELECT * from recipes WHERE rid IN (SELECT rid FROM recipes, userrecipe, auth_user WHERE rid=rid_id AND uid_id=id AND username='"""+ user +"""')"""
           querystring += ";"
           print(querystring)
           cur.execute(querystring)
