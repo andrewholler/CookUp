@@ -10,6 +10,7 @@
 	<div class="page-header">
 		<h2 class="cookup"><a href="/dashboard.html" style="color: #000000; text-decoration: none;">CookUp</a></h2>
   <a class="topcorner" id="header1-like" href="{% url 'logout' %}">Logout</a>
+  <center><h2><a class="topmiddle" id="add_recipe" href="{% url 'submitrecipe' %}" style="color: #000000; test-decoration: none;">Add Recipe</a></h2></center>
 	</div>
    <center><h1>Profile</h1></center>
    <h2 class="profile_elements"> Username: {{request.user.username}} </h2>

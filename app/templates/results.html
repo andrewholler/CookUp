@@ -1,14 +1,70 @@
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link href = "/static/app/style.css" rel = "stylesheet">
+</head>
 <body>
-  <h2><a href="/dashboard.html" style="color: #000000; text-decoration: none;">CookUp</a></h2>
+  <div class="page-header">
+		  <h2 class="cookup"><a href="{%url 'dashboard'%}" style="color: #000000; text-decoration: none;">CookUp</a></h2>
+		  <a class="topcorner" id="header1-like" href="{%url 'profile'%}">My Profile</a>
+    <center><h2><a class="topmiddle" id="add_recipe" href="{% url 'submitrecipe' %}" style="color: #000000; test-decoration: none;">Add Recipe</a></h2></center>
+	 </div>
 </body>
 
 {% if results %}
-  <form method="get" action="/search/">
-    Search Again:<input type="text" name="q" id="id_q" value="{{ query }}"/>
-    <input type="submit" value="Search"/>
+  <form id="searchform" method="get" action="/search/">
+    <h3 class="text-center" style="color: #000000; font-family: 'Chicle', cursive; font-size: 30px">{{ results|length }} result(s) found</h3>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container">
+        <div class="input-group stylish-input-group">
+         <input class="form-control" type="text" name="q" id="id_q" value="{{ query }}" placeholder="Keywords"/>
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container">
+        <div class="input-group stylish-input-group">
+         <input class="form-control" type="number" min=0 step=0.01 name="cal" id="id_cal" placeholder="Max Calories"/>
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container">
+        <div class="input-group stylish-input-group">
+         <input class="form-control" type="text" name="ingr" id="id_ingr" placeholder="Ingredient"/>
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <br>
+    <div class="form-group last text-center">
+      <button type="submit" class="btn btn-success btn-sm">Search</button>
+    </div>
   </form>
+  
+  <hr class="" style="margin-left: 20%; margin-right: 20%; height:3px;border:none;color:#333;background-color:#333;">
+
   {% for result in results %}
-    <table name="q" border="1">
+    <table class="col-sm-6 col-sm-offset-3" name="q" border="1" style="background: #ffffff; border: 2px solid black;">
       <tr>
         <td>
           <b>Recipe Name: </b>
@@ -89,19 +145,21 @@
         <td>{{ result.0.10 }}</td>
       </tr>
     </table>
-    <form method="get" action="/edit/">
-      <input type="hidden" value="{{ result.0.0 }}" name="q"/>
-      <input type="submit" value="Edit"/>
-    </form>
-    <form method="get" action="/deleterecipe/">
-      <input type="hidden" value="{{ result.0.0 }}" name="q"/>
-      <input type="submit" value="Delete"/>
-    </form>
+    <div class="col-sm-6 col-sm-offset-3">
+      <form method="get" action="/edit/">
+        <input type="hidden" value="{{ result.0.0 }}" name="q"/>
+        <button type="submit" class="btn btn-success btn-sm">Edit</button>
+      </form>
+      <form method="get" action="/deleterecipe/">
+        <input type="hidden" value="{{ result.0.0 }}" name="q"/>
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+      </form>
+    </div>
     <br>
 
   {% endfor %}
 {% else %}
-  <h2 class='error'>No recipes with
+  <h2 class='error text-center'>No recipes with
     {% if keyword %}
       , keyword {{ keyword}}
     {% endif %}
@@ -112,9 +170,50 @@
       , ingredient {{ ingredient}}
     {% endif %}
   </h2>
-  <h4> Try searching with a different parameters.</h4>
-  <form method="get" action="/search/">
-    Search Recipe:<input type="text" name="q" id="id_q" value="{{ query }}"/>
-    <input type="submit" value="Search"/>
+  <form id="searchform" method="get" action="/search/">
+    <h3 class="text-center" style="color: #000000; font-family: 'Chicle', cursive; font-size: 30px">Try searching with a different parameters.</h3>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container">
+        <div class="input-group stylish-input-group">
+         <input class="form-control" type="text" name="q" id="id_q" value="{{ query }}" placeholder="Keywords"/>
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container">
+        <div class="input-group stylish-input-group">
+         <input class="form-control" type="number" min=0 step=0.01 name="cal" id="id_cal" placeholder="Max Calories"/>
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="container">
+     <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+       <div id="imaginary_container">
+        <div class="input-group stylish-input-group">
+         <input class="form-control" type="text" name="ingr" id="id_ingr" placeholder="Ingredient"/>
+         <span class="input-group-addon">
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <br>
+    <div class="form-group last text-center">
+      <button type="submit" class="btn btn-success btn-sm">Search</button>
+    </div>
   </form>
 {% endif %}
