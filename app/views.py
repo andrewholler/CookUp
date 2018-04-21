@@ -119,7 +119,7 @@ def search(request):
     
     comment = None
     context = RequestContext(request)
-    return render_to_response('results.html', {"results": results, "keyword": keyword, "maxcalories": maxcalories, "ingredient": ingredient}, )
+    return render_to_response('results.html', {"results": results, "keyword": keyword, "maxcalories": maxcalories, "ingredient": ingredient, "user": user}, )
 
 @login_required
 def edit(request):
