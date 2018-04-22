@@ -20,7 +20,7 @@
    <h2 class="profile_elements"> Average Recipe Rating: {{ rating }}</h2>
    <h2 class="profile_elements"> My Recipes: </h2>
    {% for result in recipes %}
-    <center><table style="background: #ffffff; border: 2px solid black;" name="q" border="1">
+    <center><div class="imaginary container"><table class="col-sm-6 col-sm-offset-3" style="background: #ffffff; border: 2px solid black;" name="q" border="1">
       <tr>
         <td>
           <b>Recipe Name: </b>
@@ -100,7 +100,7 @@
         </td>
         <td>{{ result.0.10 }}</td>
       </tr>
-    </table></center>
+    </table></div></center>
     <br>
 
   {% endfor %}
