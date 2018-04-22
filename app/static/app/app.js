@@ -108,21 +108,11 @@ function addIngredient(element) {
   input.value = element.currentTarget.innerText;
   input.name = "ingredient";
   ingredient.appendChild(input);
-<<<<<<< Updated upstream
-  
-=======
-
->>>>>>> Stashed changes
   var groupinput = document.createElement("input");
   groupinput.type = "hidden";
   groupinput.name = "food-group";
   groupinput.value = element.currentTarget.getAttribute("foodgroup");
-  ingredient.appendChild(groupinput);
-<<<<<<< Updated upstream
-  
-=======
-
->>>>>>> Stashed changes
+  ingredient.appendChild(groupinput);=
   var li = document.createElement("li");
   li.className = "list-group-item";
   li.textContent = element.currentTarget.innerText;

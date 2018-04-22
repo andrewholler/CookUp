@@ -242,11 +242,6 @@ def addrecipe(request):
   ingredientMeasures = request.GET.getlist("ingredient-measure")
   ingredientFoodGroups = request.GET.getlist("food-group")
   print(ingredientFoodGroups)
-<<<<<<< Updated upstream
-  
-=======
-
->>>>>>> Stashed changes
   for i, ingredient in enumerate(ingredients):
     print(i, ingredient)
     ingredient = ingredient.replace("'", "")
@@ -256,11 +251,7 @@ def addrecipe(request):
     iid = 0
     if not cur.fetchall()[0][0]:
       ingredient_insert_query = """INSERT INTO ingredient (name, fdgroup) VALUES ('""" + ingredient + """', '"""+ ingredientFoodGroups[i] +"""')
-<<<<<<< Updated upstream
-                                   RETURNING iid;"""
-=======
-                                    RETURNING iid;"""
->>>>>>> Stashed changes
+                        RETURNING iid;"""
       cur.execute(ingredient_insert_query)
       iid = cur.fetchall()[0][0]
 
