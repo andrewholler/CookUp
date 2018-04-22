@@ -118,7 +118,7 @@ function addIngredient(element) {
   
   var deletebutton = document.createElement("span");
   deletebutton.className = "glyphicon glyphicon-remove"
-  deletebutton.setAttribute("onclick", "this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode.previousSibling); this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode.previousSibling); this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode);");
+  deletebutton.setAttribute("onclick", "this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode.previousSibling); this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode.previousSibling); this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode); updateCalories(this);");
   deletebutton.style = "cursor: pointer";
   span.appendChild(deletebutton);
   
