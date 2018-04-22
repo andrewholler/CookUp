@@ -33,12 +33,14 @@ url(r'^index.html$', RedirectView.as_view(pattern_name='dashboard', permanent=Fa
 url(r'^register.html$', app.views.register, name='register'),
 url(r'^dashboard.html$', app.views.dashboard, name='dashboard'),
 url(r'^profile.html$', app.views.profile, name='profile'),
+url(r'^foodgroups.html', app.views.foodgroups, name='foodgroups'),
 url(r'^submitrecipe.html', app.views.submitrecipe, name='submitrecipe'),
 url(r'^search/', app.views.search, name='search'),
 url(r'^edit/', app.views.edit, name='edit'),
 url(r'^submitedit', app.views.submitedit, name='submitedit'),
 url(r'^deleterecipe', app.views.deleterecipe, name='deleterecipe'),
 url(r'^addrecipe', app.views.addrecipe, name='addrecipe'),
+url(r'^addFoodGroups', app.views.addFoodGroups, name='addFoodGroups'),
 path('admin/', admin.site.urls),
 ]
 

@@ -1,0 +1,88 @@
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link href = "/static/app/style.css" rel = "stylesheet">
+</head>
+<body onload="foodgroupsform.reset();">
+	<div class="page-header">
+		<h2 class="cookup"><a href="/dashboard.html" style="color: #000000; text-decoration: none;">CookUp</a></h2>
+  <a class="topcorner" id="header1-like" href="{% url 'logout' %}">Logout</a>
+	</div>
+   <center><h1>Allergens </h1></center>
+	 <form method="get" action="/addFoodGroups/" id="foodgroupsform">
+	 <center> <b> Check the food groups you wish to not be included in your recipe search </b></center>
+	 <center>
+		 <table>
+  <tbody>
+    <tr>
+      <td>Baked Products</td>
+			<td><input type="checkbox"></td>
+
+    </tr>
+    <tr>
+      <td>Beef Products</td>
+      <td><input type="checkbox"></td>
+    </tr>
+    <tr>
+      <td>Breakfast Cereals</td>
+      <td><input type="checkbox"></td>
+    </tr>
+    <tr>
+      <td>Cereal Grains and Pasta </td>
+      <td><input type="checkbox"></td>
+    </tr>
+		<tr>
+			<td>Fast Foods </td>
+			<td><input type="checkbox"></td>
+		</tr>
+		<tr>
+			<td>Lamb, Veal, and Game Products </td>
+			<td><input type="checkbox"></td>
+		</tr>
+		<tr>
+			<td>Meals, Entrees, and Side Dishes </td>
+			<td><input type="checkbox"></td>
+		</tr>
+		<tr>
+			<td>Cereal Grains and Pasta </td>
+			<td><input type="checkbox"></td>
+		</tr>
+		<tr>
+			<td>Nut and Seed Products </td>
+			<td><input type="checkbox"></td>
+		</tr>
+		<tr>
+			<td>Poultry Products </td>
+			<td><input type="checkbox"></td>
+		</tr>
+		<tr>
+			<td>Snacks </td>
+			<td><input type="checkbox"></td>
+		</tr>
+		<tr>
+			<td>Soups, Sauces and Gravies </td>
+			<td><input type="checkbox"></td>
+		</tr>
+		<tr>
+			<td>Vegetable and Vegetable Product</td>
+			<td><input type="checkbox"></td>
+		</tr>
+    <tr>
+      <td>Eggs</td>
+      <td><input type="checkbox"></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+ <center><button class="btn btn-success btn-sm" type="submit" value="Submit">Submit</button></center>
+ </form>
+ </center>
+
+
+</body>
+</html>

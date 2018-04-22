@@ -51,7 +51,7 @@ def profile(request):
   con = None
   con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
   cur = con.cursor()
-  cur.execute(""" SELECT avg(Recipes.rating) 
+  cur.execute(""" SELECT avg(Recipes.rating)
                   FROM ((Userrecipe
                     INNER JOIN auth_user ON Userrecipe.uid_id = auth_user.id)
                     INNER JOIN Recipes ON Userrecipe.rid_id = recipes.rid)
@@ -59,19 +59,19 @@ def profile(request):
   user_rating = cur.fetchall()[0][0]
   if user_rating == None:
     user_rating = 0.0
-    
+
   recipes = None
   cur.execute("""SELECT * FROM recipes, userrecipe
                  WHERE uid_id=""" + str(request.user.id) + """ AND rid_id=rid;""")
   recipes = cur.fetchall()
-  
+
   for i, recipe in enumerate(recipes):
     rid = recipe[0]
     cur.execute("""select quantity, measure, name
                    from recipecontains, ingredient
                    where rid_id='""" + str(rid) + """' and iid_id = iid;""")
     recipes[i] = recipes[i], tuple(cur.fetchall())
-  
+
   cur.close()
   con.close()
   return render(request, 'profile.html', {"rating": "%.2f" % user_rating, "recipes": recipes})
@@ -79,6 +79,19 @@ def profile(request):
 @login_required
 def submitrecipe(request):
  return render(request, 'submitrecipe.html')
+
+@login_required
+def foodgroups(request):
+ return render(request, 'foodgroups.html')
+
+
+@login_required
+def addFoodGroups(request):
+ return redirect(profile)
+
+
+
+
 
 @login_required
 def search(request):
@@ -105,7 +118,7 @@ def search(request):
           print(querystring)
           cur.execute(querystring)
           results = cur.fetchall()
-          
+
           for i, result in enumerate(results):
             rid = result[0]
             cur.execute("""select quantity, measure, name
@@ -116,7 +129,7 @@ def search(request):
           results = None
     else:
       results = None
-    
+
     comment = None
     context = RequestContext(request)
     return render_to_response('results.html', {"results": results, "keyword": keyword, "maxcalories": maxcalories, "ingredient": ingredient, "user": user}, )
@@ -151,7 +164,7 @@ def submitedit(request):
   cooktime = request.GET.get('cooktime')
   servings = request.GET.get('servings')
   calories = request.GET.get('calories')
-  uid = request.user.id 
+  uid = request.user.id
   con = None
   con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
   cur = con.cursor()
@@ -163,32 +176,32 @@ def submitedit(request):
       cooktime = 0
   querystring += ",cooktime='" + str(cooktime) + "'"
   print(querystring)
-  
+
   try:
       servings = int(servings)
   except ValueError:
       servings = 'None'
   if servings != 'None':
     querystring += ",servings='" + str(servings) + "'"
-  
-  querystring += "WHERE rid = """ + str(rid) + """ AND EXISTS( SELECT * FROM userrecipe WHERE rid_id=""" + str(rid) + """ AND uid_id= """ + str(uid) + """);""" 
+
+  querystring += "WHERE rid = """ + str(rid) + """ AND EXISTS( SELECT * FROM userrecipe WHERE rid_id=""" + str(rid) + """ AND uid_id= """ + str(uid) + """);"""
   print(querystring)
   cur.execute(querystring)
   cur.close()
   con.commit()
   con.close()
-  
+
   return redirect(dashboard)
 
 @login_required
 def deleterecipe(request):
   q = request.GET.get('q')
-  uid = request.user.id 
+  uid = request.user.id
   con = None
   con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
   cur = con.cursor()
   querystring = """DELETE FROM recipes
-                   WHERE rid = """ + str(q) + """ AND EXISTS( SELECT * FROM userrecipe WHERE rid_id=""" + str(q) + """ AND uid_id= """ + str(uid) + """);""" 
+                   WHERE rid = """ + str(q) + """ AND EXISTS( SELECT * FROM userrecipe WHERE rid_id=""" + str(q) + """ AND uid_id= """ + str(uid) + """);"""
   cur.execute(querystring)
   cur.close()
   con.commit()
@@ -222,14 +235,18 @@ def addrecipe(request):
   querystring += ",'" + str(servings) + "'"
   querystring += ") RETURNING rid;"
   cur.execute(querystring)
-  
+
   rid = cur.fetchall()[0][0]
   ingredients = request.GET.getlist("ingredient")
   ingredientAmounts = request.GET.getlist("ingredient-amount")
   ingredientMeasures = request.GET.getlist("ingredient-measure")
   ingredientFoodGroups = request.GET.getlist("food-group")
   print(ingredientFoodGroups)
+<<<<<<< Updated upstream
   
+=======
+
+>>>>>>> Stashed changes
   for i, ingredient in enumerate(ingredients):
     print(i, ingredient)
     ingredient = ingredient.replace("'", "")
@@ -239,9 +256,14 @@ def addrecipe(request):
     iid = 0
     if not cur.fetchall()[0][0]:
       ingredient_insert_query = """INSERT INTO ingredient (name, fdgroup) VALUES ('""" + ingredient + """', '"""+ ingredientFoodGroups[i] +"""')
+<<<<<<< Updated upstream
                                    RETURNING iid;"""
+=======
+                                    RETURNING iid;"""
+>>>>>>> Stashed changes
       cur.execute(ingredient_insert_query)
       iid = cur.fetchall()[0][0]
+
     else:
       get_ingredient_iid_query = """SELECT iid FROM ingredient WHERE name='""" + ingredient + """';"""
       cur.execute(get_ingredient_iid_query)
@@ -250,11 +272,11 @@ def addrecipe(request):
     recipecontains_query = """INSERT INTO recipecontains (iid_id, rid_id, quantity, measure)
                               VALUES ('"""+str(iid)+"""', '"""+str(rid)+"""', '"""+str(ingredientAmounts[i])+"""', '"""+ingredientMeasures[i]+"""');"""
     cur.execute(recipecontains_query)
-  
+
   userrecipe_query = """INSERT INTO userrecipe (rid_id, uid_id)
                         VALUES ('""" + str(rid) + """', '""" + str(request.user.id) + """');"""
   cur.execute(userrecipe_query)
-  
+
   cur.close()
   con.commit()
   con.close()

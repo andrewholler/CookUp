@@ -9,18 +9,18 @@ function searchIngredient() {
   xhttp.send();
   var response = JSON.parse(xhttp.responseText);
   console.log(response);
-  
+
   select = document.getElementById("testing");
-  
+
   while (select.firstChild) {
     select.removeChild(select.firstChild);
   }
-  
+
   var el = document.createElement("ul");
   el.className = "list-group";
   el.id = "search-result-list"
   select.appendChild(el);
-  
+
   if (response.errors) {
     li = document.createElement("li")
     li.className = "list-group-item";
@@ -46,7 +46,7 @@ function searchIngredient() {
 function addIngredient(element) {
   // Add an ingredient to the ingredient list
   var list = document.getElementById("ingredient-list");
-  
+
   // Add the quantity input
   var div = document.createElement("div");
   div.className = "col-lg-2";
@@ -60,7 +60,7 @@ function addIngredient(element) {
   input.name = "ingredient-amount";
   input.setAttribute("onchange", "updateCalories(this);");
   div.appendChild(input);
-  
+
   // Add the measures input
   div = document.createElement("div");
   div.className = "col-lg-2";
@@ -71,14 +71,14 @@ function addIngredient(element) {
   select.form = "recipeForm";
   select.setAttribute("onchange", "updateCalories(this);");
   div.appendChild(select);
-  
+
   var url = "https://api.nal.usda.gov/ndb/V2/reports?ndbno=" + element.currentTarget.id + "&type=b&format=json&api_key=W0hVxQq8rODeGQiB06CoDvHnhgibC6eUT9CsZjZD";
   console.log(url);
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", url, false);
   xhttp.send();
   var response = JSON.parse(xhttp.responseText);
-  
+
   if (response.notfound) {
     console.log("Couldn't get food report for ingredient " + element.currentTarget.id);
   }
@@ -96,40 +96,48 @@ function addIngredient(element) {
       }
     }
   }
-  
+
   // Add the ingredient
   var ingredient = document.createElement("div");
   ingredient.className = "col-sm-8";
   list.appendChild(ingredient);
-  
+
   var input = document.createElement("input");
   input.type = "hidden";
   input.class = "form-control";
   input.value = element.currentTarget.innerText;
   input.name = "ingredient";
   ingredient.appendChild(input);
+<<<<<<< Updated upstream
   
+=======
+
+>>>>>>> Stashed changes
   var groupinput = document.createElement("input");
   groupinput.type = "hidden";
   groupinput.name = "food-group";
   groupinput.value = element.currentTarget.getAttribute("foodgroup");
   ingredient.appendChild(groupinput);
+<<<<<<< Updated upstream
   
+=======
+
+>>>>>>> Stashed changes
   var li = document.createElement("li");
   li.className = "list-group-item";
   li.textContent = element.currentTarget.innerText;
   ingredient.append(li);
-  
+
   var span = document.createElement("span");
   span.className = "delete-ingredient-icon";
   li.appendChild(span);
-  
+
   var deletebutton = document.createElement("span");
   deletebutton.className = "glyphicon glyphicon-remove"
   deletebutton.setAttribute("onclick", "this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode.previousSibling); this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode.previousSibling); this.parentNode.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode.parentNode); updateCalories(this);");
   deletebutton.style = "cursor: pointer";
   span.appendChild(deletebutton);
-  
+
   // Deletes search result list after you select an item
   select = document.getElementById("search-result-list");
   while (select.firstChild) {
@@ -140,12 +148,12 @@ function addIngredient(element) {
 function updateCalories(element) {
   calories_box = document.getElementById("calories");
   ingredients = document.getElementById("ingredient-list");
-  
+
   var newval = 0.0;
   for(var i = 0; i < ingredients.children.length; i += 3) {
     newval += ingredients.children[i].firstChild.value*parseFloat(ingredients.children[i+1].firstChild.selectedOptions[0].id);
   }
   calories_box.value = newval;
-  
+
   //calories_box.value = parseFloat(calories_box.value) + (parseFloat(element.selectedOptions[0].id))*(element.parentNode.previousSibling.firstChild.value);
 }
