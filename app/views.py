@@ -151,6 +151,7 @@ def submitedit(request):
   cooktime = request.GET.get('cooktime')
   servings = request.GET.get('servings')
   calories = request.GET.get('calories')
+  uid = request.user.id 
   con = None
   con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
   cur = con.cursor()
@@ -170,7 +171,7 @@ def submitedit(request):
   if servings != 'None':
     querystring += ",servings='" + str(servings) + "'"
   
-  querystring += "WHERE rid = """ + rid + ";"
+  querystring += "WHERE rid = """ + str(rid) + """ AND EXISTS( SELECT * FROM userrecipe WHERE rid_id=""" + str(rid) + """ AND uid_id= """ + str(uid) + """);""" 
   print(querystring)
   cur.execute(querystring)
   cur.close()
@@ -182,11 +183,12 @@ def submitedit(request):
 @login_required
 def deleterecipe(request):
   q = request.GET.get('q')
+  uid = request.user.id 
   con = None
   con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
   cur = con.cursor()
-  querystring = """DELETE FROM Recipes
-                   WHERE rid = """ + q + ";"
+  querystring = """DELETE FROM recipes
+                   WHERE rid = """ + str(q) + """ AND EXISTS( SELECT * FROM userrecipe WHERE rid_id=""" + str(q) + """ AND uid_id= """ + str(uid) + """);""" 
   cur.execute(querystring)
   cur.close()
   con.commit()
