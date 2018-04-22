@@ -38,6 +38,7 @@ function searchIngredient() {
       li.style = "cursor: pointer";
       li.onclick = function(li){addIngredient(li)};
       li.id = opt.ndbno;
+      li.setAttribute("foodgroup", opt.group)
       el.appendChild(li);
   }
 }
@@ -54,6 +55,7 @@ function addIngredient(element) {
   input.type = "number";
   input.value = 0;
   input.min = 0;
+  input.step = 0.01;
   input.className = "form-control";
   input.name = "ingredient-amount";
   input.setAttribute("onchange", "updateCalories(this);");
@@ -106,6 +108,12 @@ function addIngredient(element) {
   input.value = element.currentTarget.innerText;
   input.name = "ingredient";
   ingredient.appendChild(input);
+  
+  var groupinput = document.createElement("input");
+  groupinput.type = "hidden";
+  groupinput.name = "food-group";
+  groupinput.value = element.currentTarget.getAttribute("foodgroup");
+  ingredient.appendChild(groupinput);
   
   var li = document.createElement("li");
   li.className = "list-group-item";

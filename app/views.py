@@ -225,6 +225,8 @@ def addrecipe(request):
   ingredients = request.GET.getlist("ingredient")
   ingredientAmounts = request.GET.getlist("ingredient-amount")
   ingredientMeasures = request.GET.getlist("ingredient-measure")
+  ingredientFoodGroups = request.GET.getlist("food-group")
+  print(ingredientFoodGroups)
   
   for i, ingredient in enumerate(ingredients):
     print(i, ingredient)
@@ -234,7 +236,7 @@ def addrecipe(request):
     cur.execute(ingredient_exists_query)
     iid = 0
     if not cur.fetchall()[0][0]:
-      ingredient_insert_query = """INSERT INTO ingredient (name) VALUES ('""" + ingredient + """')
+      ingredient_insert_query = """INSERT INTO ingredient (name, fdgroup) VALUES ('""" + ingredient + """', '"""+ ingredientFoodGroups[i] +"""')
                                    RETURNING iid;"""
       cur.execute(ingredient_insert_query)
       iid = cur.fetchall()[0][0]
@@ -242,6 +244,7 @@ def addrecipe(request):
       get_ingredient_iid_query = """SELECT iid FROM ingredient WHERE name='""" + ingredient + """';"""
       cur.execute(get_ingredient_iid_query)
       iid = cur.fetchall()[0][0]
+
     recipecontains_query = """INSERT INTO recipecontains (iid_id, rid_id, quantity, measure)
                               VALUES ('"""+str(iid)+"""', '"""+str(rid)+"""', '"""+str(ingredientAmounts[i])+"""', '"""+ingredientMeasures[i]+"""');"""
     cur.execute(recipecontains_query)
