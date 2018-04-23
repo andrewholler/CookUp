@@ -10,75 +10,71 @@
 	<div class="page-header">
 		<h2 class="cookup"><a href="/dashboard.html" style="color: #000000; text-decoration: none;">CookUp</a></h2>
   <a class="topcorner" id="header1-like" href="{% url 'logout' %}">Logout</a>
-	</div>
-   <center><h1>Allergens </h1></center>
+	 </div>
+  <center><h1>Allergens </h1></center>
 	 <form method="get" action="/addFoodGroups/" id="foodgroupsform">
 	 <center> <b> Check the food groups you wish to not be included in your recipe search </b></center>
 	 <center>
-		 <table>
-  <tbody>
-    <tr>
-      <td>Baked Products</td>
-			<td><input type="checkbox"></td>
-
-    </tr>
-    <tr>
-      <td>Beef Products</td>
-      <td><input type="checkbox"></td>
-    </tr>
-    <tr>
-      <td>Breakfast Cereals</td>
-      <td><input type="checkbox"></td>
-    </tr>
-    <tr>
-      <td>Cereal Grains and Pasta </td>
-      <td><input type="checkbox"></td>
-    </tr>
-		<tr>
-			<td>Fast Foods </td>
-			<td><input type="checkbox"></td>
-		</tr>
-		<tr>
-			<td>Lamb, Veal, and Game Products </td>
-			<td><input type="checkbox"></td>
-		</tr>
-		<tr>
-			<td>Meals, Entrees, and Side Dishes </td>
-			<td><input type="checkbox"></td>
-		</tr>
-		<tr>
-			<td>Cereal Grains and Pasta </td>
-			<td><input type="checkbox"></td>
-		</tr>
-		<tr>
-			<td>Nut and Seed Products </td>
-			<td><input type="checkbox"></td>
-		</tr>
-		<tr>
-			<td>Poultry Products </td>
-			<td><input type="checkbox"></td>
-		</tr>
-		<tr>
-			<td>Snacks </td>
-			<td><input type="checkbox"></td>
-		</tr>
-		<tr>
-			<td>Soups, Sauces and Gravies </td>
-			<td><input type="checkbox"></td>
-		</tr>
-		<tr>
-			<td>Vegetable and Vegetable Product</td>
-			<td><input type="checkbox"></td>
-		</tr>
-    <tr>
-      <td>Eggs</td>
-      <td><input type="checkbox"></td>
-    </tr>
-  </tbody>
-</table>
-
-
-
+		<table>
+    <tbody>
+      <tr>
+        <td>Baked Products</td>
+        <td><input name="zero" value=0 type="checkbox"></td>
+      </tr>
+      <tr>
+        <td>Beef Products</td>
+        <td><input name="one" value=1 type="checkbox"></td>
+      </tr>
+      <tr>
+        <td>Breakfast Cereals</td>
+        <td><input name="two" value=2 type="checkbox"></td>
+      </tr>
+      <tr>
+        <td>Cereal Grains and Pasta</td>
+        <td><input name="three" value=3 type="checkbox"></td>
+      </tr>
+      <tr>
+       <td>Fast Foods</td>
+       <td><input name="four" value=4 type="checkbox"></td>
+      </tr>
+      <tr>
+       <td>Lamb, Veal, and Game Products</td>
+       <td><input name="five" value=5 type="checkbox"></td>
+      </tr>
+      <tr>
+       <td>Meals, Entrees, and Side Dishes</td>
+       <td><input name="six" value=6 type="checkbox"></td>
+      </tr>
+      <tr>
+       <td>Cereal Grains and Pasta</td>
+       <td><input name="seven" value=7 type="checkbox"></td>
+      </tr>
+      <tr>
+       <td>Nut and Seed Products</td>
+       <td><input name="eight" value=8 type="checkbox"></td>
+      </tr>
+      <tr>
+       <td>Poultry Products</td>
+       <td><input name="nine" value=9 type="checkbox"></td>
+      </tr>
+      <tr>
+       <td>Snacks</td>
+       <td><input name="ten" value=10 type="checkbox"></td>
+      </tr>
+      <tr>
+       <td>Soups, Sauces and Gravies</td>
+       <td><input name="eleven" value=11 type="checkbox"></td>
+      </tr>
+      <tr>
+       <td>Vegetables and Vegetable Product</td>
+       <td><input name="twelve" value=12 type="checkbox"></td>
+      </tr>
+      <tr>
+        <td>Dairy and Egg Products</td>
+        <td><input name="thirteen" value=13 type="checkbox"></td>
+      </tr>
+    </tbody>
+  </table>
  <center><button class="btn btn-success btn-sm" type="submit" value="Submit">Submit</button></center>
  </form>
  </center>

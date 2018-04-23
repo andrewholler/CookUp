@@ -112,7 +112,7 @@ function addIngredient(element) {
   groupinput.type = "hidden";
   groupinput.name = "food-group";
   groupinput.value = element.currentTarget.getAttribute("foodgroup");
-  ingredient.appendChild(groupinput);=
+  ingredient.appendChild(groupinput);
   var li = document.createElement("li");
   li.className = "list-group-item";
   li.textContent = element.currentTarget.innerText;

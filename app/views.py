@@ -84,14 +84,30 @@ def submitrecipe(request):
 def foodgroups(request):
  return render(request, 'foodgroups.html')
 
-
 @login_required
 def addFoodGroups(request):
- return redirect(profile)
-
-
-
-
+  fields = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen']
+  food_groups = ['Baked Products', 'Beef Products', 'Breakfast Cereals', 'Cereal Grains and Pasta', 'Fast Foods', 'Lamb, Veal, and Game Products', 'Meals, Entrees, and Side Dishes', 'Pork Products', 'Nut and Seed Products', 'Poultry Products', 'Snacks', 'Soups, Sauces, and Gravies', 'Vegetables and Vegetable Products', 'Dairy and Egg Products']
+  preferences = "string_to_array('"
+  for field in fields:
+    value = request.GET.get(field)
+    if value:
+      preferences += (food_groups[int(value)] + "~^~")
+  preferences += "', '~^~')"
+  
+  querystring = """UPDATE userpreferences SET preferences="""+ preferences +""" WHERE uid_id="""+ str(request.user.id) +""";
+                   INSERT INTO userpreferences (uid_id, preferences)
+                          SELECT """+ str(request.user.id) +""", """+ preferences +"""
+                          WHERE NOT EXISTS (SELECT 1 FROM userpreferences WHERE uid_id="""+ str(request.user.id) +""");"""
+  print(querystring)
+  con = None
+  con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
+  cur = con.cursor()
+  cur.execute(querystring)
+  cur.close()
+  con.commit()
+  con.close()
+  return redirect(profile)
 
 @login_required
 def search(request):
@@ -105,7 +121,8 @@ def search(request):
         cur = con.cursor()
         try:
           querystring = """SELECT * from recipes
-                         WHERE 1=1"""
+                         WHERE
+                         rid NOT IN (select rid from recipes, recipecontains, ingredient, userpreferences WHERE rid=recipecontains.rid_id AND recipecontains.iid_id=iid AND userpreferences.uid_id="""+ str(request.user.id) +""" AND userpreferences.preferences @> string_to_array(ingredient.fdgroup, ''))"""
           if keyword:
             querystring += """ AND name ILIKE '%""" + str(keyword) + "%'"
           if maxcalories:
