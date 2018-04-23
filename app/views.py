@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 import psycopg2
 from psycopg2 import connect
+#from IPython.Debugger import Tracer
 import sys
 
 

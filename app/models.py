@@ -53,6 +53,14 @@ class AuthUser(models.Model):
         managed = False
         db_table = 'auth_user'
 
+class Allergens(models.Model):
+    uid = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    allergen = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'allergens'
+
 
 class AuthUserGroups(models.Model):
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
