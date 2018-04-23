@@ -11,11 +11,13 @@
 		<h2 class="cookup"><a href="/dashboard.html" style="color: #000000; text-decoration: none;">CookUp</a></h2>
   <a class="topcorner" id="header1-like" href="{% url 'logout' %}">Logout</a>
 	 </div>
-  <center><h1>Allergens </h1></center>
+  <center><h1>Allergens & Preferences</h1></center>
 	 <form method="get" action="/addFoodGroups/" id="foodgroupsform">
-	 <center> <b> Check the food groups you wish to not be included in your recipe search </b></center>
+	 <center><b style="font-size: 20px">Food Groups you wish to be excluded from search.</b></center>
+  <center><b style="font-size: 20px">Recipes containing selected food groups will not appear.</b></center>
+  <br>
 	 <center>
-		<table>
+		<table style="font-weight:bold;">
     <tbody>
       <tr>
         <td>Baked Products</td>
@@ -75,9 +77,10 @@
       </tr>
     </tbody>
   </table>
+  <br>
  <center><button class="btn btn-success btn-sm" type="submit" value="Submit">Submit</button></center>
- </form>
  </center>
+ </form>
 
 
 </body>
