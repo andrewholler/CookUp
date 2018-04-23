@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 import psycopg2
 from psycopg2 import connect
+#from IPython.Debugger import Tracer
 import sys
 
 
@@ -87,11 +88,18 @@ def foodgroups(request):
 
 @login_required
 def addFoodGroups(request):
- return redirect(profile)
+    allergens = request.GET.getlist('allergens')
+    con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
+    cur = con.cursor()
+    for i in allergens:
+        allergen_query = """INSERT INTO Allergens (uid, allergen)
+                       VALUES ('""" + str(request.user.id) + """', i);"""
+        cur.execute(allergen_query)
 
-
-
-
+    cur.close()
+    con.commit()
+    con.close()
+    return redirect(profile)
 
 @login_required
 def search(request):
