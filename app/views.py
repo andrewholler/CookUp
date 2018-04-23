@@ -234,6 +234,7 @@ def addrecipe(request):
   description = request.GET.get('description')
   videourl = request.GET.get('videourl')
   instructions = request.GET.get('instructions')
+  instructions = instructions.replace("'", "")
   cooktime = request.GET.get('cooktime')
   servings = request.GET.get('servings')
   calories = request.GET.get('calories')
