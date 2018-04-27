@@ -91,11 +91,14 @@ def foodgroups(request):
   querystring = """SELECT preferences FROM userpreferences WHERE uid_id="""+ str(request.user.id) +""";"""
   cur.execute(querystring)
   checked = [0]*len(food_groups)
-  for food_group in cur.fetchall()[0][0]:
-    try:
-      checked[food_groups.index(food_group)] = 1
-    except:
-      continue
+  grouplist = cur.fetchall()
+  print(grouplist)
+  if grouplist:
+    for food_group in cur.fetchall()[0][0]:
+      try:
+        checked[food_groups.index(food_group)] = 1
+      except:
+        continue
   cur.close()
   con.close()
   return render(request, 'foodgroups.html', {"checked": checked})
