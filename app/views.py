@@ -94,7 +94,7 @@ def foodgroups(request):
   grouplist = cur.fetchall()
   print(grouplist)
   if grouplist:
-    for food_group in cur.fetchall()[0][0]:
+    for food_group in grouplist[0][0]:
       try:
         checked[food_groups.index(food_group)] = 1
       except:
