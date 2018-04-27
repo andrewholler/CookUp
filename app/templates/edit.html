@@ -13,9 +13,9 @@
     <br>
     Instructions <input type=text value="{{ results.0.6 }}" name="instructions"/>
     <br>
-    Cooktime <input type=text value="{{ results.0.8 }}" name="cooktime"/>
+    Cooktime <input type=number min=0 value="{{ results.0.8 }}" name="cooktime"/>
     <br>
-    Servings <input type=text value="{{ results.0.9 }}" name="servings"/>
+    Servings <input type=number min=0 value="{{ results.0.9 }}" name="servings"/>
     <br>
     Calories <input type=number value="{{ results.0.10 }}" step="0.01" name="calories"/>
     <br>
