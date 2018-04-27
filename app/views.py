@@ -13,6 +13,8 @@ from psycopg2 import connect
 import sys
 
 
+food_groups = ['Baked Products', 'Beef Products', 'Breakfast Cereals', 'Cereal Grains and Pasta', 'Fast Foods', 'Lamb, Veal, and Game Products', 'Meals, Entrees, and Side Dishes', 'Cereal Grains and Pasta', 'Nut and Seed Products', 'Poultry Products', 'Snacks', 'Soups, Sauces, and Gravies', 'Vegetables and Vegetable Products', 'Dairy and Egg Products']
+
 def register(request):
   type(request.POST)
   myDict = dict(request.POST)
@@ -79,16 +81,28 @@ def profile(request):
 
 @login_required
 def submitrecipe(request):
- return render(request, 'submitrecipe.html')
+  return render(request, 'submitrecipe.html')
 
 @login_required
 def foodgroups(request):
- return render(request, 'foodgroups.html')
+  con = None
+  con = connect(user='fyrxqvffutzuth', host='ec2-174-129-26-203.compute-1.amazonaws.com', password='81fd164e25fc7569030612fa5a67d1460e534db4289aeef761114c6746429d9b', dbname='d1au6je7k25ijn', port='5432')
+  cur = con.cursor()
+  querystring = """SELECT preferences FROM userpreferences WHERE uid_id="""+ str(request.user.id) +""";"""
+  cur.execute(querystring)
+  checked = [0]*len(food_groups)
+  for food_group in cur.fetchall()[0][0]:
+    try:
+      checked[food_groups.index(food_group)] = 1
+    except:
+      continue
+  cur.close()
+  con.close()
+  return render(request, 'foodgroups.html', {"checked": checked})
 
 @login_required
 def addFoodGroups(request):
   fields = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen']
-  food_groups = ['Baked Products', 'Beef Products', 'Breakfast Cereals', 'Cereal Grains and Pasta', 'Fast Foods', 'Lamb, Veal, and Game Products', 'Meals, Entrees, and Side Dishes', 'Pork Products', 'Nut and Seed Products', 'Poultry Products', 'Snacks', 'Soups, Sauces, and Gravies', 'Vegetables and Vegetable Products', 'Dairy and Egg Products']
   preferences = "string_to_array('"
   for field in fields:
     value = request.GET.get(field)
