@@ -105,7 +105,7 @@ def foodgroups(request):
 
 @login_required
 def addFoodGroups(request):
-  fields = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen']
+  fields = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen']
   preferences = "string_to_array('"
   for field in fields:
     value = request.GET.get(field)
