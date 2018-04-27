@@ -157,6 +157,18 @@
         </td>
         <td>{{ result.0.10 }}</td>
       </tr>
+      <tr>
+        <td>
+          <b>User: </b>
+        </td>
+        <td>
+          {% if result.0.11 %}
+            {{ result.0.11.0 }}
+          {% else %}
+            None
+          {% endif %}
+        </td>
+      </tr>
     </table>
     <div class="col-sm-6 col-sm-offset-3">
       <form method="get" action="/edit/">

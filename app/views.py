@@ -139,10 +139,17 @@ def search(request):
 
           for i, result in enumerate(results):
             rid = result[0]
+            cur.execute("""select username
+                           from auth_user
+                           where id=(SELECT uid_id from userrecipe where rid_id="""+ str(rid) +""");
+                           """)
+            results[i] += tuple(cur.fetchall())
+            print(results[i])
             cur.execute("""select quantity, measure, name
                            from recipecontains, ingredient
                            where rid_id='""" + str(rid) + """' and iid_id = iid;""")
             results[i] = results[i], tuple(cur.fetchall())
+            
         except Recipes.DoesNotExist:
           results = None
     else:
